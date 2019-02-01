@@ -1,0 +1,37 @@
+{
+  "name": "",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "babel-core": "^6.18.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-latest": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-google-autocomplete": "^1.0.15",
+    "react-markdown": "^3.6.0",
+    "react-router": "^4.2.0",
+    "webpack": "^2.2.0"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^2.1.0-beta.10"
+  },
+  "scripts": {
+    "start": "npm install --loglevel=error & webpack --colors --watch",
+    "dev:start": "webpack -d --watch & webpack-dev-server --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/demand-progress/call-page-template-www.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/demand-progress/call-page-template-www/issues"
+  },
+  "homepage": "https://github.com/demand-progress/call-page-template-www#readme"
+}
