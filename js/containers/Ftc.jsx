@@ -1,4 +1,5 @@
 import React, {Component}  from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 class Ftc extends  Component { // need to see if i need script tag as well
     render(){
         return (
@@ -18,7 +19,7 @@ class Ftc extends  Component { // need to see if i need script tag as well
             			<input type="text" id="fieldjjdtutu" name="cm-f-jjdtutu" pattern="\d*" required="" placeholder="zip code"/>
             			<input type="hidden" id="fieldjttiuku" name="cm-f-jttiuku" value=""/>
             			<input type="hidden" id="fieldjtdyili" name="cm-f-jtdyili" value=""/>
-            			<button className="js-cm-submit-button" type="submit"></button>
+            			<button type="submit"><FontAwesomeIcon icon={['fas', 'chevron-right']} /></button>
             		</form>
             		<script type="text/javascript" src="https://js.createsend1.com/javascript/copypastesubscribeformlogic.js"></script>
             		

@@ -43,7 +43,7 @@ body {
 header {
 	margin: 0;
 	padding: 40px 5% 0 5%;
-	background: #fff200 url('images/splash.jpg');
+	background: #fff200 url('../images/splash.jpg');
 	background-size: cover;
 	background-blend-mode: overlay;
 	background-repeat: no-repeat;
@@ -328,7 +328,7 @@ h1 {
 	text-transform: uppercase;
 	border: none;
 }
-
+/* change here */
 #subForm > button[type=submit] {
 	padding: 0 30px;
 	background: #e31818;
@@ -366,7 +366,7 @@ small {
 #zuckerberg {
 	margin: 0 auto 40px auto;
 	display: block;
-	background: #fff200 url('images/mark-zuckerberg.png');
+	background: #fff200 url('../images/mark-zuckerberg.gif'); /* png */
 	background-repeat: no-repeat;
 	background-blend-mode: luminosity;
 	background-size: cover;

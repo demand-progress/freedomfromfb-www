@@ -1,6 +1,7 @@
 /////////////////// 
 import React, {Component}  from 'react';
-import Logo from './Logo.jsx';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import Logo from './Logo.jsx';
 
 class Footer extends  Component {
     // constructor(props){
@@ -63,9 +64,9 @@ class Footer extends  Component {
             	</ul>
 	
             	<menu id="share">
-            		<li id="facebook"><a href="https://www.facebook.com/Freedom-from-FB-1199263703543699/" target="_blank"><i className="fab fa-facebook-f"></i></a></li>
-            		<li id="twitter"><a href="https://twitter.com/FacebookBreakup" target="_blank"><i className="fab fa-twitter"></i></a></li>
-            		<li id="instagram"><a href="https://www.instagram.com/facebookbreakup/" target="_blank"><i className="fab fa-instagram"></i></a></li>
+            	    <li id="facebook"><a href="https://www.facebook.com/Freedom-from-FB-1199263703543699/" target="_blank"><FontAwesomeIcon icon={['fab', 'facebook-f']} /></a></li>
+            		<li id="twitter"><a href="https://twitter.com/FacebookBreakup" target="_blank"><FontAwesomeIcon icon={['fab', 'twitter']} /></a></li>
+            		<li id="instagram"><a href="https://www.instagram.com/facebookbreakup/" target="_blank"><FontAwesomeIcon icon={['fab', 'instagram']} /></a></li>
             	</menu>
 	
             	<menu id="footer">
@@ -74,6 +75,9 @@ class Footer extends  Component {
             		<li><a href="#about">about the campaign</a></li>
             		<li><a href="https://openmarketsinstitute.org/privacy-policy/">privacy policy</a></li>
             	</menu>
+            	<div className="press-link">
+            		<p>For press inquiries, please email <a href="mailto:press@freedomfromfacebook.com">press@freedomfromfacebook.com</a></p>
+            	</div>
             </footer>
         );
     }
