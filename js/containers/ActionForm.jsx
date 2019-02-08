@@ -18,9 +18,8 @@ class ActionForm extends Component {
     onSubmit(evt) {
       evt.preventDefault();
       
-      const fullname = document.getElementById('fullname'); // changed 
-      const email = document.getElementById('emailform'); // error here????
-      // const address1 = document.getElementById('street');
+      const fullname = document.getElementById('fullname'); 
+      const email = document.getElementById('emailform'); 
       console.log("PRINGINT INFORMATION");
       console.log(fullname);
       console.log(email);
@@ -29,18 +28,12 @@ class ActionForm extends Component {
       const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
       const nameRegex = /^[A-Za-z '.-]+$/.test(fullname.value);
       
-      console.log("PRINGIN NAME STUFF");
-      console.log(fullname.value);
-      console.log(fullname.value.trim());
       if (!fullname.value.trim() || !nameRegex) {
         fullname.focus();
         alert('Please enter your name.');
         return;
       }
-      console.log("PRINTING EMAIL STUFF");
-      // const email = form.email;
-      console.log(email.value);
-      console.log(email.value.trim());
+
       if (!email.value.trim()) {
         email.focus();
         alert('Please enter your email.');
@@ -51,14 +44,6 @@ class ActionForm extends Component {
         return;
       }
       
-      // const address1 = form.street;
-      // if (!address1.value.trim()) {
-      //   address1.focus();
-      //   alert("Please enter your address.");
-      //   return;
-      // }
-      
-      // const zip = form.zip;
       if (!zip.value.trim()) {
         zip.focus();
         alert('Please enter your Zipcode.');
@@ -69,7 +54,6 @@ class ActionForm extends Component {
         return;
       }
       
-      // not sure about this part 
       const fields = {
         'action_user_agent': navigator.userAgent,
         'country': 'United States',
@@ -129,7 +113,7 @@ class ActionForm extends Component {
             <span>Sending...</span>
           </button>
         );
-      } else { // changing span part 
+      } else { 
         button = (
           <button type="submit" onClick={ this.click } ><FontAwesomeIcon icon={['fas', 'chevron-right']} /></button>
         );
@@ -142,8 +126,8 @@ class ActionForm extends Component {
     			<input type="text" id="zip" name="zip" required="" placeholder="zip code"/>
     			{button}
     		</form>
-      )
+      );
     }  
   }
   
-export default ActionForm
+export default ActionForm;

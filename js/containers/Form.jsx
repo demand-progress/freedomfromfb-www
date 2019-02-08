@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { getQueryVariables } from '../utils';
-// import PhoneScript from './PhoneScript.jsx'
-// import CallInitiate from './CallInitiate.jsx'
-import ActionForm from './ActionForm.jsx'; // this stays here
+import ActionForm from './ActionForm.jsx';
 
 class Form extends Component {
 
@@ -55,19 +53,9 @@ class Form extends Component {
     render() {
         let form = null;
         
-        // if(this.state.callMade){
-        //   form = ( 
-        //     < PhoneScript />
-        //   )    
-        // } else if(this.state.emailAction || this.state.submitted) {
-        //   form = (
-        //     < CallInitiate callMade={ this.callMade } callActionEmailForm= {this.state.emailAction} />
-        //   )
-        // } else {
-          form = (
-            < ActionForm formSubmitted={ this.formSubmitted }/>
-          );  
-        // }
+        form = (
+          < ActionForm formSubmitted={ this.formSubmitted }/>
+        );  
         
         return (
           <div>    
