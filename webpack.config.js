@@ -1,7 +1,11 @@
 module.exports = [{
     devServer: {
         inline:true,
-        port: 8008
+        // port: 8008
+        host: process.env.IP,
+        port: process.env.PORT,
+        "public": "freedomfromfb-erickandres.c9users.io"
+        
     },
     entry: "./js/call.jsx",
     output: {
