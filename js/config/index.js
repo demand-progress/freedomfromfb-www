@@ -1,8 +1,8 @@
 const CONF = {
-    actionKitPageShortName: 'stop-fueling-war-yemen_v3',
-    actionKitPageId: 2612,
-    prettyCampaignName: 'Stop Fueling War in Yemen',
-    callCampaign: 'stop-fueling-war-yemen',
+    actionKitPageShortName: 'freedom-from-fb',
+    actionKitPageId: 2639,
+    prettyCampaignName: 'Freedom From Facebook',
+    callCampaign: 'freedom-from-fb',
     callPowerId: 38
 };
 const URLS = {

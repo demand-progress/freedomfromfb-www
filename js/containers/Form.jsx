@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
-import { getQueryVariables } from '../utils'
-import PhoneScript from './PhoneScript.jsx'
-import CallInitiate from './CallInitiate.jsx'
-import ActionForm from './ActionForm.jsx'
+import React, { Component } from 'react';
+import { getQueryVariables } from '../utils';
+// import PhoneScript from './PhoneScript.jsx'
+// import CallInitiate from './CallInitiate.jsx'
+import ActionForm from './ActionForm.jsx'; // this stays here
 
 class Form extends Component {
 
@@ -21,11 +21,11 @@ class Form extends Component {
     componentWillMount () {
       this.setState({
         emailAction: window.location.href.indexOf('email=call') !== -1
-      })
+      });
     }
 
     componentDidMount () {
-      window.scrollTo(0, 0)
+      window.scrollTo(0, 0);
     }
     
     callMade(evt) {
@@ -36,8 +36,8 @@ class Form extends Component {
             callMade: true
           }, function(){
             window.scrollTo( 0, 0);
-          }) 
-        }.bind(this), 5000)  
+          }); 
+        }.bind(this), 5000); 
     }
     
     formSubmitted(evt) {
@@ -47,27 +47,27 @@ class Form extends Component {
           submitted: true
         }, function(){
           window.scrollTo( 0, 0);
-        })
-        }.bind(this), 5000)
+        });
+        }.bind(this), 5000);
     }
     
     
     render() {
         let form = null;
         
-        if(this.state.callMade){
-          form = ( 
-            < PhoneScript />
-          )    
-        } else if(this.state.emailAction || this.state.submitted) {
-          form = (
-            < CallInitiate callMade={ this.callMade } callActionEmailForm= {this.state.emailAction} />
-          )
-        } else {
+        // if(this.state.callMade){
+        //   form = ( 
+        //     < PhoneScript />
+        //   )    
+        // } else if(this.state.emailAction || this.state.submitted) {
+        //   form = (
+        //     < CallInitiate callMade={ this.callMade } callActionEmailForm= {this.state.emailAction} />
+        //   )
+        // } else {
           form = (
             < ActionForm formSubmitted={ this.formSubmitted }/>
-          )  
-        }
+          );  
+        // }
         
         return (
           <div>    

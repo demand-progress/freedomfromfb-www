@@ -19,11 +19,15 @@
     <title>Freedom from Facebook | The company has too much power over our lives.</title>
     
     <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <!--<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-KwxQKNj2D0XKEW5O/Y6haRH39PE/xry8SAoLbpbCMraqlX7kUP6KHOnrlrtvuJLR" crossorigin="anonymous">-->
+    <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">-->
+    <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">-->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,800" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-117201922-2"></script>
+    <script type='text/javascript' src='https://freedomfromfb.com/wp-includes/js/wp-embed.min.js?ver=4.9.9'></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -36,7 +40,60 @@
     <link rel='https://api.w.org/' href='https://freedomfromfb.com/wp-json/' />
 </head>
 
-<body>
+<body onload="paint()">
     <div id="root" ></div>
     <script type="text/javascript" src="js/bundle.js?v=8"></script>
+    <script>
+    	var widgetCSS = "" +
+    	    "body{font-family: 'Montserrat', sans-serif; font-weight: 500;}" +
+    		".timeline-Tweet-text{font-size: 18px!important; line-height: 24px!important;}" +
+    		".timeline-Widget--edge{border-radius:0;}" +
+    		".timeline-Widget{border-radius:0;}";
+    
+    	function paint(){
+        	var w = document.getElementById("twitter-widget-0").contentDocument;
+        	var s = document.createElement("style");
+        	s.innerHTML = widgetCSS;
+        	s.type = "text/css";
+        	w.head.appendChild(s);
+        }
+    </script>
+    <script>// Select all links with hashes
+    $('a[href*="#"]')
+      // Remove links that don't actually link to anything
+      .not('[href="#"]')
+      .not('[href="#0"]')
+      .click(function(event) {
+        // On-page links
+        if (
+          location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') 
+          && 
+          location.hostname == this.hostname
+        ) {
+          // Figure out element to scroll to
+          var target = $(this.hash);
+          target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+          // Does a scroll target exist?
+          if (target.length) {
+            // Only prevent default if animation is actually gonna happen
+            event.preventDefault();
+            $('html, body').animate({
+              scrollTop: target.offset().top
+            }, 1000, function() {
+              // Callback after animation
+              // Must change focus!
+              var $target = $(target);
+              $target.focus();
+              if ($target.is(":focus")) { // Checking if the target was focused
+                return false;
+              } else {
+                $target.attr('tabindex','-1'); // Adding tabindex for elements not focusable
+                $target.focus(); // Set focus again
+              }
+            });
+          }
+        }
+      });
+    //# sourceURL=pen.js
+</script>
 </body>

@@ -19,6 +19,7 @@
     "react-google-autocomplete": "^1.0.15",
     "react-markdown": "^3.6.0",
     "react-router": "^4.2.0",
+    "react-twitter-embed": "^2.0.4",
     "webpack": "^2.2.0"
   },
   "devDependencies": {

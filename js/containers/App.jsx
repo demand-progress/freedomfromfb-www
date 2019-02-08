@@ -10,6 +10,7 @@ import Footer from './Footer.jsx';
 import Header from './Header.jsx';
 import About from './About.jsx';
 import Ftc from './Ftc.jsx';
+import Tweet from './Tweet.jsx';
 
 class App extends Component {
   // <Main />

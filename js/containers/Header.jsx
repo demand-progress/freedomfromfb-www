@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-class Header extends  Component { //<FontAwesomeIcon icon={['fab', 'fa-twitter']} /> <img src="images/splash.jpg" id="logo">
+class Header extends  Component { 
     
     render(){
         return (
             <header> 
                 <menu id="social">
-                    Popular gadgets come from vendors like:
             		<li id="facebook"><a href="https://www.facebook.com/Freedom-from-FB-1199263703543699/" target="_blank"><FontAwesomeIcon icon={['fab', 'facebook-f']} /></a></li>
             		<li id="twitter"><a href="https://twitter.com/FacebookBreakup" target="_blank"><FontAwesomeIcon icon={['fab', 'twitter']} /></a></li>
             		<li id="instagram"><a href="https://www.instagram.com/facebookbreakup/" target="_blank"><FontAwesomeIcon icon={['fab', 'instagram']} /></a></li>
