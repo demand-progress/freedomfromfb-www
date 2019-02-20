@@ -6,10 +6,8 @@ class Header extends  Component {
         return (
             <header> 
                 <menu id="social">
-            		<li id="facebook"><a href="https://www.facebook.com/Freedom-from-FB-1199263703543699/" target="_blank"><FontAwesomeIcon icon={['fab', 'facebook-f']} /></a></li>
+            		<li id="facebook"><a href="https://www.facebook.com/demandprogress/" target="_blank"><FontAwesomeIcon icon={['fab', 'facebook-f']} /></a></li>
             		<li id="twitter"><a href="https://twitter.com/FacebookBreakup" target="_blank"><FontAwesomeIcon icon={['fab', 'twitter']} /></a></li>
-            		<li id="instagram"><a href="https://www.instagram.com/facebookbreakup/" target="_blank"><FontAwesomeIcon icon={['fab', 'instagram']} /></a></li>
-            		<li id="email"><a href="mailto:press@freedomfromfacebook.com"><FontAwesomeIcon icon={['far', 'envelope']} /></a></li>
             	</menu>
             	<nav role="navigation">
             		<div id="menuToggle">
@@ -26,7 +24,7 @@ class Header extends  Component {
             		</div>
             	</nav>
             	<section id="featured">
-            		Facebook has too much power over our lives and democracy. It’s time for us to take that power back.
+            		Tell the FTC a fine isn’t enough. It’s time to break up Facebook and make the internet safe for democracy and privacy.
             		<img src="images/logo.png" id="logo"/>
             	</section>
         	</header>

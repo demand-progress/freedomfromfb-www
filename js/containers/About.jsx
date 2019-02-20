@@ -17,8 +17,9 @@ class About extends  Component {
             
             	<p>Enough.</p>
             
-            	<p>The five members of the Federal Trade Commission, which is the part of our government tasked with overseeing Facebook, can make Facebook safe for our democracy by 
-            	breaking it up, giving us the freedom to communicate across networks, and protecting our privacy.</p>
+            	<p>The five members of the Federal Trade Commission, which is the part of our government tasked with overseeing Facebook, can make Facebook safe for our democracy. 
+                The FTC is debating right now whether to levy a major fine against Facebook. But that won’t be enough to guarantee things change.  The FTC must break Facebook up, 
+                giving us the freedom to communicate across networks, and protecting our privacy.</p>
             
             	<p>Together, we will make sure that they do.</p>
             </section>

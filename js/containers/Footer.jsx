@@ -45,9 +45,6 @@ class Footer extends  Component {
         // might incorporate constructor
         return (
             <footer>
-                <section id="disclaimer">
-            		Paid for by Freedom from Facebook
-            	</section>
             	<ul id="coalition">
             		<li><img src="images/citizens-against-monopoly.png"/></li>
             		<li><img src="images/cwa.png"/></li>
@@ -69,14 +66,12 @@ class Footer extends  Component {
             		<li id="instagram"><a href="https://www.instagram.com/facebookbreakup/" target="_blank"><FontAwesomeIcon icon={['fab', 'instagram']} /></a></li>
             	</menu>
 	
-            	<menu id="footer">
-            		<li><a href="#petition">petition the ftc</a></li>
-            		<li><a href="https://freedomfromfb.com/guide/">how-to guide on privacy</a></li>
-            		<li><a href="#about">about the campaign</a></li>
-            		<li><a href="https://openmarketsinstitute.org/privacy-policy/">privacy policy</a></li>
-            	</menu>
+                <menu id="footer">
+                    <li><a href="https://demandprogress.org/privacy-policy/">Our privacy policy</a></li>
+                </menu>
+
             	<div className="press-link">
-            		<p>For press inquiries, please email <a href="mailto:press@freedomfromfacebook.com">press@freedomfromfacebook.com</a></p>
+            		<p>For press inquiries, please contact us at: 202-681-7582 or <a href="mailto:press@demandprogress.org">press@demandprogress.org</a></p>
             	</div>
             </footer>
         );
