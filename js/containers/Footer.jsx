@@ -61,9 +61,8 @@ class Footer extends  Component {
             	</ul>
 	
             	<menu id="share">
-            	    <li id="facebook"><a href="https://www.facebook.com/Freedom-from-FB-1199263703543699/" target="_blank"><FontAwesomeIcon icon={['fab', 'facebook-f']} /></a></li>
+            	    <li id="facebook"><a href="https://www.facebook.com/demandprogress/" target="_blank"><FontAwesomeIcon icon={['fab', 'facebook-f']} /></a></li>
             		<li id="twitter"><a href="https://twitter.com/FacebookBreakup" target="_blank"><FontAwesomeIcon icon={['fab', 'twitter']} /></a></li>
-            		<li id="instagram"><a href="https://www.instagram.com/facebookbreakup/" target="_blank"><FontAwesomeIcon icon={['fab', 'instagram']} /></a></li>
             	</menu>
 	
                 <menu id="footer">
