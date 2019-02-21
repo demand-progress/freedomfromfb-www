@@ -58,7 +58,7 @@ class Footer extends  Component {
             		<li><img src="images/public-citizen.png"/></li>
             		<li><img src="images/rootsactionlogo.png"/></li>
             		<li><img src="images/sum-of-us.png"/></li>
-            		<li><img src="images/logo-credo-action.jpg"/></li>
+            		<li><img style={{"filter": "none"}} src="images/logo-credo-action.jpg"/></li>
             	</ul>
 	
             	<menu id="share">
