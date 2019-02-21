@@ -16,7 +16,7 @@ class Ftc extends  Component {
             		<p><span id="uppercase">It's time to make Facebook safe for democracy.</span></p>
             	</section>
             	<section id="petition">
-            		<h1>Tell the Federal Trade Commission and sign the petition:</h1>
+            		<h1>Sign the petition:</h1>
             		<Form />
             		
             		
