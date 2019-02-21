@@ -56,12 +56,17 @@ class Form extends Component {
         form = (
           < ActionForm formSubmitted={ this.formSubmitted }/>
         );  
-        
+        if (!this.state.submitted) {
         return (
           <div>    
           {form}
         </div>
       );
+        } else {
+          return (
+            <div><h2>Thank you for signing!</h2></div>
+          )
+        }
     }
 }
 

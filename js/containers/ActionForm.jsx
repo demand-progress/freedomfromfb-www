@@ -13,6 +13,7 @@ class ActionForm extends Component {
       
         this.onSubmit = this.onSubmit.bind(this);
         this.click = this.click.bind(this);
+        this.sendFormToActionKit = this.sendFormToActionKit.bind(this);
     }
     
     onSubmit(evt) {
@@ -93,15 +94,21 @@ class ActionForm extends Component {
         form.appendChild(input);
       });
   
-      form.submit();  
+      form.submit();
     }
     
-    click(e){
+    click(e) {
+      var self = this;
       this.onSubmit(e);
       this.setState({
         sent: true
       });
       this.props.formSubmitted(e);
+      setTimeout(function() {
+        self.setState({
+          sent: false
+        })
+      }, 1000);
     }
     
     render() {
@@ -109,9 +116,7 @@ class ActionForm extends Component {
       
       if(this.state.sent){
         button = (
-          <button className="btn">
-            <span>Sending...</span>
-          </button>
+          <button type="submit" ><FontAwesomeIcon icon={['fas', 'spinner']} /></button>
         );
       } else { 
         button = (

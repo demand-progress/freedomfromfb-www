@@ -25,7 +25,6 @@ class Header extends  Component {
             	</nav>
             	<section id="featured">
             		Tell the FTC a fine isn’t enough. It’s time to break up Facebook and make the internet safe for democracy and privacy.
-            		<img src="images/logo.png" id="logo"/>
             	</section>
         	</header>
         ); 

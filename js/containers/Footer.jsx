@@ -46,18 +46,11 @@ class Footer extends  Component {
         return (
             <footer>
             	<ul id="coalition">
-            		<li><img src="images/citizens-against-monopoly.png"/></li>
-            		<li><img src="images/cwa.png"/></li>
-            		<li><img src="images/content-creators-coalition.png"/></li>
-            		<li><img src="images/dfa.png"/></li>
-            		<li><img src="images/demand-progress.png"/></li>
             		<li><img src="images/jewish-voice-for-peace.png"/></li>
-            		<li><img src="images/moveon-white.png"/></li>
-            		<li><img src="images/mpower-change.png"/></li>
-            		<li><img src="images/open-markets-institute.png"/></li>
-            		<li><img src="images/public-citizen.png"/></li>
-            		<li><img src="images/rootsactionlogo.png"/></li>
-            		<li><img src="images/sum-of-us.png"/></li>
+            		<li><img src="images/demand-progress.png"/></li>
+                    <li><img style={{"filter": "none"}} src="images/PasAFV.jpg"/></li>
+                    <li><img src="images/progress-america.png"/></li>
+                    <li><img style={{"filter": "none"}} src="images/CHV Logo2.jpg"/></li>
             	</ul>
 	
             	<menu id="share">

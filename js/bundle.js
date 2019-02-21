@@ -4019,6 +4019,7 @@ var ActionForm = function (_Component) {
 
     _this.onSubmit = _this.onSubmit.bind(_this);
     _this.click = _this.click.bind(_this);
+    _this.sendFormToActionKit = _this.sendFormToActionKit.bind(_this);
     return _this;
   }
 
@@ -4108,11 +4109,17 @@ var ActionForm = function (_Component) {
   }, {
     key: 'click',
     value: function click(e) {
+      var self = this;
       this.onSubmit(e);
       this.setState({
         sent: true
       });
       this.props.formSubmitted(e);
+      setTimeout(function () {
+        self.setState({
+          sent: false
+        });
+      }, 1000);
     }
   }, {
     key: 'render',
@@ -4122,12 +4129,8 @@ var ActionForm = function (_Component) {
       if (this.state.sent) {
         button = _react2.default.createElement(
           'button',
-          { className: 'btn' },
-          _react2.default.createElement(
-            'span',
-            null,
-            'Sending...'
-          )
+          { type: 'submit' },
+          _react2.default.createElement(_reactFontawesome.FontAwesomeIcon, { icon: ['fas', 'spinner'] })
         );
       } else {
         button = _react2.default.createElement(
@@ -15472,22 +15475,7 @@ var Footer = function (_Component) {
                     _react2.default.createElement(
                         'li',
                         null,
-                        _react2.default.createElement('img', { src: 'images/citizens-against-monopoly.png' })
-                    ),
-                    _react2.default.createElement(
-                        'li',
-                        null,
-                        _react2.default.createElement('img', { src: 'images/cwa.png' })
-                    ),
-                    _react2.default.createElement(
-                        'li',
-                        null,
-                        _react2.default.createElement('img', { src: 'images/content-creators-coalition.png' })
-                    ),
-                    _react2.default.createElement(
-                        'li',
-                        null,
-                        _react2.default.createElement('img', { src: 'images/dfa.png' })
+                        _react2.default.createElement('img', { src: 'images/jewish-voice-for-peace.png' })
                     ),
                     _react2.default.createElement(
                         'li',
@@ -15497,37 +15485,17 @@ var Footer = function (_Component) {
                     _react2.default.createElement(
                         'li',
                         null,
-                        _react2.default.createElement('img', { src: 'images/jewish-voice-for-peace.png' })
+                        _react2.default.createElement('img', { style: { "filter": "none" }, src: 'images/PasAFV.jpg' })
                     ),
                     _react2.default.createElement(
                         'li',
                         null,
-                        _react2.default.createElement('img', { src: 'images/moveon-white.png' })
+                        _react2.default.createElement('img', { src: 'images/progress-america.png' })
                     ),
                     _react2.default.createElement(
                         'li',
                         null,
-                        _react2.default.createElement('img', { src: 'images/mpower-change.png' })
-                    ),
-                    _react2.default.createElement(
-                        'li',
-                        null,
-                        _react2.default.createElement('img', { src: 'images/open-markets-institute.png' })
-                    ),
-                    _react2.default.createElement(
-                        'li',
-                        null,
-                        _react2.default.createElement('img', { src: 'images/public-citizen.png' })
-                    ),
-                    _react2.default.createElement(
-                        'li',
-                        null,
-                        _react2.default.createElement('img', { src: 'images/rootsactionlogo.png' })
-                    ),
-                    _react2.default.createElement(
-                        'li',
-                        null,
-                        _react2.default.createElement('img', { src: 'images/sum-of-us.png' })
+                        _react2.default.createElement('img', { style: { "filter": "none" }, src: 'images/CHV Logo2.jpg' })
                     )
                 ),
                 _react2.default.createElement(
@@ -15689,12 +15657,23 @@ var Form = function (_Component) {
       var form = null;
 
       form = _react2.default.createElement(_ActionForm2.default, { formSubmitted: this.formSubmitted });
-
-      return _react2.default.createElement(
-        'div',
-        null,
-        form
-      );
+      if (!this.state.submitted) {
+        return _react2.default.createElement(
+          'div',
+          null,
+          form
+        );
+      } else {
+        return _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'h2',
+            null,
+            'Thank you for signing!'
+          )
+        );
+      }
     }
   }]);
 
@@ -15770,15 +15749,10 @@ var Ftc = function (_Component) {
                     _react2.default.createElement(
                         'p',
                         null,
-                        'The FTC should spin off Instagram, WhatsApp, and Messenger into competing networks, require interoperability, so we have the freedom to communicate across social networks, and impose strong privacy rules that empower and protect us. A fine, even a big one, won\u2019t be enough to make Facebook change.'
-                    ),
-                    _react2.default.createElement(
-                        'p',
-                        null,
                         _react2.default.createElement(
                             'span',
-                            { id: 'uppercase' },
-                            'It\'s time to make Facebook safe for democracy.'
+                            null,
+                            'The FTC should spin off Instagram, WhatsApp, and Messenger into competing networks, require interoperability, so we have the freedom to communicate across social networks, and impose strong privacy rules that empower and protect us. A fine, even a big one, won\u2019t be enough to make Facebook change.'
                         )
                     )
                 ),
@@ -15932,8 +15906,7 @@ var Header = function (_Component) {
                 _react2.default.createElement(
                     'section',
                     { id: 'featured' },
-                    'Tell the FTC a fine isn\u2019t enough. It\u2019s time to break up Facebook and make the internet safe for democracy and privacy.',
-                    _react2.default.createElement('img', { src: 'images/logo.png', id: 'logo' })
+                    'Tell the FTC a fine isn\u2019t enough. It\u2019s time to break up Facebook and make the internet safe for democracy and privacy.'
                 )
             );
         }
