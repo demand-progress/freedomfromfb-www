@@ -14,7 +14,7 @@ class Ftc extends  Component {
             		<p><span>The FTC should spin off Instagram, WhatsApp, and Messenger into competing networks, require interoperability, so we have the freedom to communicate across social networks, and impose strong privacy rules that empower and protect us. A fine, even a big one, won’t be enough to make Facebook change.</span></p>
             	</section>
             	<section id="petition">
-            		<h1>Tell the Federal Trade Commission and sign the petition:</h1>
+            		<h1>Sign the petition:</h1>
             		<Form />
             		
             		
