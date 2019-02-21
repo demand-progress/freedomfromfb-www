@@ -40,7 +40,7 @@ class ActionForm extends Component {
       }
     }
 
-    lookUpStateByZipCode(zipcode) {       
+    lookUpStateByZipCode(zipcode) {
       var url = "https://www.zipcodeapi.com/rest/"+keys.api_key+"/info.json/" + zipcode + "/radians";
       $.ajax({
         "url": url,
