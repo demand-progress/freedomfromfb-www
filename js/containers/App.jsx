@@ -24,7 +24,6 @@ class App extends Component {
           <Header />
           <Ftc />
           <About />
-          <Tweet />
           <Footer />
         </div>
       );
