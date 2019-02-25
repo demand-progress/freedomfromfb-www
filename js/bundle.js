@@ -4040,10 +4040,27 @@ var ActionForm = function (_Component) {
     _this.sendFormToActionKit = _this.sendFormToActionKit.bind(_this);
     _this.lookUpStateByZipCode = _this.lookUpStateByZipCode.bind(_this);
     _this.lookUpTwitterHandles = _this.lookUpTwitterHandles.bind(_this);
+    _this.redirectTwitterStorm = _this.redirectTwitterStorm.bind(_this);
     return _this;
   }
 
   _createClass(ActionForm, [{
+    key: 'redirectTwitterStorm',
+    value: function redirectTwitterStorm() {
+      var url = 'https://tweetswarm.herokuapp.com/freedom-facebook?';
+      var twitterHandleQuery = '';
+      var copyTwitterHandles = this.state.twitterHandles.slice();
+      for (var i = 0; i < copyTwitterHandles.length; i++) {
+        if (i == 0) {
+          twitterHandleQuery += 'tag[]=' + copyTwitterHandles[i];
+        } else {
+          twitterHandleQuery += '&tag[]=' + copyTwitterHandles[i];
+        }
+      }
+      url += twitterHandleQuery;
+      window.location.replace(url);
+    }
+  }, {
     key: 'lookUpTwitterHandles',
     value: function lookUpTwitterHandles() {
       var copyMembersID = this.state.congressMembersID.slice();
@@ -4077,6 +4094,7 @@ var ActionForm = function (_Component) {
           }
         }
         this.lookUpTwitterHandles();
+        this.redirectTwitterStorm();
       }.bind(this)).fail(function (data) {
         console.log("Request failed");
       });
