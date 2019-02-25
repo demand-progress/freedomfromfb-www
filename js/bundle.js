@@ -15592,7 +15592,7 @@ var Footer = function (_Component) {
                     _react2.default.createElement(
                         'li',
                         null,
-                        _react2.default.createElement('img', { src: 'images/demand-progress.png' })
+                        _react2.default.createElement('img', { src: 'images/demand-progress-logo.png' })
                     ),
                     _react2.default.createElement(
                         'li',
