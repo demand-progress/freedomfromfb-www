@@ -57,7 +57,7 @@ class ActionForm extends Component {
     }
 
     lookUpStateByZipCode(zipcode) {
-      var url = "http://api.zippopotam.us/us/" + zipcode; //90210
+      var url = "https://api.zippopotam.us/us/" + zipcode; //90210
       // var url = "https://www.zipcodeapi.com/rest/"+keys.api_key+"/info.json/" + zipcode + "/radians";
       $.ajax({
         "url": url,
