@@ -24,6 +24,22 @@ class ActionForm extends Component {
         this.sendFormToActionKit = this.sendFormToActionKit.bind(this);
         this.lookUpStateByZipCode = this.lookUpStateByZipCode.bind(this);
         this.lookUpTwitterHandles = this.lookUpTwitterHandles.bind(this);
+        this.redirectTwitterStorm = this.redirectTwitterStorm.bind(this);
+    }
+    
+    redirectTwitterStorm() {
+      var url = 'https://tweetswarm.herokuapp.com/freedom-facebook?';
+      var twitterHandleQuery = '';
+      const copyTwitterHandles = this.state.twitterHandles.slice(); 
+      for (var i = 0; i < copyTwitterHandles.length; i++) {
+        if (i == 0) {
+          twitterHandleQuery += 'tag[]=' + copyTwitterHandles[i];
+        } else {
+          twitterHandleQuery += '&tag[]=' + copyTwitterHandles[i];
+        }
+      }
+      url += twitterHandleQuery;
+      window.location.replace(url);
     }
 
     lookUpTwitterHandles() {
@@ -57,6 +73,7 @@ class ActionForm extends Component {
           }
         }
         this.lookUpTwitterHandles();
+        this.redirectTwitterStorm();
       }.bind(this)).fail(function(data) {
         console.log("Request failed");
       });
