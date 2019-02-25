@@ -4,7 +4,7 @@ import { CONF, URLS } from '../config';
 import jsonData from "../../legislators-current.json";
 import legislators_media from "../../legislators-social-media.json";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { keys } from '../config/keys.js'
+import { keys } from '../config/keys.js';
 
 class ActionForm extends Component {
 
@@ -57,12 +57,14 @@ class ActionForm extends Component {
     }
 
     lookUpStateByZipCode(zipcode) {
-      var url = "https://www.zipcodeapi.com/rest/"+keys.api_key+"/info.json/" + zipcode + "/radians";
+      var url = "http://api.zippopotam.us/us/" + zipcode; //90210
+      // var url = "https://www.zipcodeapi.com/rest/"+keys.api_key+"/info.json/" + zipcode + "/radians";
       $.ajax({
         "url": url,
         "dataType": "json"
       }).done(function(data) {
-        this.setState({usstate: data.state});
+        // this.setState({usstate: data.state});
+        this.setState({usstate: data.places[0]['state abbreviation']});
         for(var i = 0; i < jsonData.length; i++) {
           var object = jsonData[i];
           var legislator_bioID = object.id.bioguide; 
