@@ -540,6 +540,20 @@ menu#share li#facebook a:hover, menu#share li#twitter a:hover, menu#share li#ins
 	transition: all 0.2s ease;
 }
 
+/* Mobile & Desktop Differences */
+
+.hide-mobile {
+  @media (max-width: 767px) {
+    display: none;
+  }
+}
+
+.hide-desktop {
+  @media not all and (max-width: 767px) {
+    display: none;
+  }
+}
+
 /* SINGLE HEADER */
 
 header#single {
@@ -677,7 +691,9 @@ ul#follow li a .fa-instagram {
 	}
 	
 	#ftc {
-		display: block;
+		/*display: block;*/
+		flex-direction: column-reverse;
+    	display: flex;
 	}
 	
 	#description {
