@@ -4079,7 +4079,7 @@ var ActionForm = function (_Component) {
     key: 'lookUpStateByZipCode',
     value: function lookUpStateByZipCode(zipcode) {
       var url = "https://api.zippopotam.us/us/" + zipcode; //90210
-      // var url = "https://www.zipcodeapi.com/rest/"+keys.api_key+"/info.json/" + zipcode + "/radians";
+      // var url = 'https://whoismyrepresentative.com/getall_mems.php?zip=' + zipcode + '&output=json';
       $.ajax({
         "url": url,
         "dataType": "json"
@@ -15860,7 +15860,7 @@ var Ftc = function (_Component) {
                         _react2.default.createElement(
                             'span',
                             null,
-                            'The FTC should spin off Instagram, WhatsApp, and Messenger into competing networks, require interoperability, so we have the freedom to communicate across social networks, and impose strong privacy rules that empower and protect us. A fine, even a big one, won\u2019t be enough to make Facebook change.'
+                            '"The FTC should spin off Instagram, WhatsApp, and Messenger into competing networks, require interoperability, so we have the freedom to communicate across social networks, and impose strong privacy rules that empower and protect us. A fine, even a big one, won\u2019t be enough to make Facebook change."'
                         )
                     )
                 ),
@@ -15870,7 +15870,7 @@ var Ftc = function (_Component) {
                     _react2.default.createElement(
                         'h1',
                         null,
-                        'Sign the petition:'
+                        'Email the FTC:'
                     ),
                     _react2.default.createElement(_Form2.default, null),
                     _react2.default.createElement('div', { className: 'clearfix' }),
@@ -15881,6 +15881,16 @@ var Ftc = function (_Component) {
                             'small',
                             null,
                             'One or more of the participating organizations (listed at bottom) may email you about their campaigns.'
+                        ),
+                        _react2.default.createElement(
+                            'small',
+                            { className: 'hide-mobile' },
+                            ' The language to the left will be sent to the FTC commissioners under your name.'
+                        ),
+                        _react2.default.createElement(
+                            'small',
+                            { className: 'hide-desktop' },
+                            ' The language to the bottom will be sent to the FTC commissioners under your name.'
                         )
                     ),
                     _react2.default.createElement('div', { className: 'clearfix' })
