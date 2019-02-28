@@ -4047,16 +4047,16 @@ var ActionForm = function (_Component) {
   _createClass(ActionForm, [{
     key: 'redirectTwitterStorm',
     value: function redirectTwitterStorm() {
-      var url = 'https://tweetswarm.herokuapp.com/freedom-facebook?';
+      var url = 'https://tweetswarm.herokuapp.com/freedom-facebook?tag[]=JoeSimonsFTC&tag[]=FTCPhillips&tag[]=chopraftc&tag[]=RKSlaughterFTC';
       var twitterHandleQuery = '';
-      var copyTwitterHandles = this.state.twitterHandles.slice();
-      for (var i = 0; i < copyTwitterHandles.length; i++) {
-        if (i == 0) {
-          twitterHandleQuery += 'tag[]=' + copyTwitterHandles[i];
-        } else {
-          twitterHandleQuery += '&tag[]=' + copyTwitterHandles[i];
-        }
-      }
+      // const copyTwitterHandles = this.state.twitterHandles.slice(); 
+      // for (var i = 0; i < copyTwitterHandles.length; i++) {
+      //   if (i == 0) {
+      //     twitterHandleQuery += 'tag[]=' + copyTwitterHandles[i];
+      //   } else {
+      //     twitterHandleQuery += '&tag[]=' + copyTwitterHandles[i];
+      //   }
+      // }
       url += twitterHandleQuery;
       window.location.replace(url);
     }
