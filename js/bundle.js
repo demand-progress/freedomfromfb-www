@@ -15881,7 +15881,7 @@ var Ftc = function (_Component) {
                         null,
                         'Email the FTC: ',
                         _react2.default.createElement(
-                            'spane',
+                            'span',
                             { className: 'mobile-only' },
                             'It\'s time to break up Facebook'
                         )
