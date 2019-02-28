@@ -668,9 +668,17 @@ ul#follow li a .fa-instagram {
 	color: #fff;
 }
 
+.mobile-only {
+	display: none;
+}
+
 @media screen and (max-width: 767px) {
 	header {
 		display: none;
+	}
+
+	.mobile-only {
+		display: inline-block;
 	}
 	
 	#featured {

@@ -15879,7 +15879,12 @@ var Ftc = function (_Component) {
                     _react2.default.createElement(
                         'h1',
                         null,
-                        'Email the FTC:'
+                        'Email the FTC: ',
+                        _react2.default.createElement(
+                            'spane',
+                            { className: 'mobile-only' },
+                            'It\'s time to break up Facebook'
+                        )
                     ),
                     _react2.default.createElement(_Form2.default, null),
                     _react2.default.createElement('div', { className: 'clearfix' }),

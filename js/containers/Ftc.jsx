@@ -15,7 +15,7 @@ class Ftc extends  Component {
                     <p><small>THE LANGUAGE ABOVE WILL BE SENT TO THE FTC COMMISSIONERS UNDER YOUR NAME.</small></p>
                 </section>
                 <section id="petition">
-                    <h1>Email the FTC:</h1>
+                    <h1>Email the FTC: <spane className="mobile-only">It's time to break up Facebook</spane></h1>
                     <Form />
                     
                     
