@@ -15862,6 +15862,15 @@ var Ftc = function (_Component) {
                             null,
                             '"The FTC should spin off Instagram, WhatsApp, and Messenger into competing networks, require interoperability, so we have the freedom to communicate across social networks, and impose strong privacy rules that empower and protect us. A fine, even a big one, won\u2019t be enough to make Facebook change."'
                         )
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        _react2.default.createElement(
+                            'small',
+                            null,
+                            'THE LANGUAGE ABOVE WILL BE SENT TO THE FTC COMMISSIONERS UNDER YOUR NAME.'
+                        )
                     )
                 ),
                 _react2.default.createElement(
@@ -15880,17 +15889,7 @@ var Ftc = function (_Component) {
                         _react2.default.createElement(
                             'small',
                             null,
-                            'One or more of the participating organizations (listed at bottom) may email you about their campaigns.'
-                        ),
-                        _react2.default.createElement(
-                            'small',
-                            { className: 'hide-mobile' },
-                            ' The language to the left will be sent to the FTC commissioners under your name.'
-                        ),
-                        _react2.default.createElement(
-                            'small',
-                            { className: 'hide-desktop' },
-                            ' The language to the bottom will be sent to the FTC commissioners under your name.'
+                            'ONE OR MORE OF THE PARTICIPATING ORGANIZATIONS (LISTED AT BOTTOM) MAY EMAIL YOU ABOUT THEIR CAMPAIGNS.'
                         )
                     ),
                     _react2.default.createElement('div', { className: 'clearfix' })
