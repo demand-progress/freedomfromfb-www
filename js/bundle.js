@@ -272,325 +272,17 @@ if (process.env.NODE_ENV === 'production') {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
-  * $script.js JS loader & dependency manager
-  * https://github.com/ded/script.js
-  * (c) Dustin Diaz 2014 | License MIT
-  */
-
-(function (name, definition) {
-  if (typeof module != 'undefined' && module.exports) module.exports = definition()
-  else if (true) !(__WEBPACK_AMD_DEFINE_FACTORY__ = (definition),
-				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
-				(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :
-				__WEBPACK_AMD_DEFINE_FACTORY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__))
-  else this[name] = definition()
-})('$script', function () {
-  var doc = document
-    , head = doc.getElementsByTagName('head')[0]
-    , s = 'string'
-    , f = false
-    , push = 'push'
-    , readyState = 'readyState'
-    , onreadystatechange = 'onreadystatechange'
-    , list = {}
-    , ids = {}
-    , delay = {}
-    , scripts = {}
-    , scriptpath
-    , urlArgs
-
-  function every(ar, fn) {
-    for (var i = 0, j = ar.length; i < j; ++i) if (!fn(ar[i])) return f
-    return 1
-  }
-  function each(ar, fn) {
-    every(ar, function (el) {
-      fn(el)
-      return 1
-    })
-  }
-
-  function $script(paths, idOrDone, optDone) {
-    paths = paths[push] ? paths : [paths]
-    var idOrDoneIsDone = idOrDone && idOrDone.call
-      , done = idOrDoneIsDone ? idOrDone : optDone
-      , id = idOrDoneIsDone ? paths.join('') : idOrDone
-      , queue = paths.length
-    function loopFn(item) {
-      return item.call ? item() : list[item]
-    }
-    function callback() {
-      if (!--queue) {
-        list[id] = 1
-        done && done()
-        for (var dset in delay) {
-          every(dset.split('|'), loopFn) && !each(delay[dset], loopFn) && (delay[dset] = [])
-        }
-      }
-    }
-    setTimeout(function () {
-      each(paths, function loading(path, force) {
-        if (path === null) return callback()
-        
-        if (!force && !/^https?:\/\//.test(path) && scriptpath) {
-          path = (path.indexOf('.js') === -1) ? scriptpath + path + '.js' : scriptpath + path;
-        }
-        
-        if (scripts[path]) {
-          if (id) ids[id] = 1
-          return (scripts[path] == 2) ? callback() : setTimeout(function () { loading(path, true) }, 0)
-        }
-
-        scripts[path] = 1
-        if (id) ids[id] = 1
-        create(path, callback)
-      })
-    }, 0)
-    return $script
-  }
-
-  function create(path, fn) {
-    var el = doc.createElement('script'), loaded
-    el.onload = el.onerror = el[onreadystatechange] = function () {
-      if ((el[readyState] && !(/^c|loade/.test(el[readyState]))) || loaded) return;
-      el.onload = el[onreadystatechange] = null
-      loaded = 1
-      scripts[path] = 2
-      fn()
-    }
-    el.async = 1
-    el.src = urlArgs ? path + (path.indexOf('?') === -1 ? '?' : '&') + urlArgs : path;
-    head.insertBefore(el, head.lastChild)
-  }
-
-  $script.get = create
-
-  $script.order = function (scripts, id, done) {
-    (function callback(s) {
-      s = scripts.shift()
-      !scripts.length ? $script(s, id, done) : $script(s, callback)
-    }())
-  }
-
-  $script.path = function (p) {
-    scriptpath = p
-  }
-  $script.urlArgs = function (str) {
-    urlArgs = str;
-  }
-  $script.ready = function (deps, ready, req) {
-    deps = deps[push] ? deps : [deps]
-    var missing = [];
-    !each(deps, function (dep) {
-      list[dep] || missing[push](dep);
-    }) && every(deps, function (dep) {return list[dep]}) ?
-      ready() : !function (key) {
-      delay[key] = delay[key] || []
-      delay[key][push](ready)
-      req && req(missing)
-    }(deps.join('|'))
-    return $script
-  }
-
-  $script.done = function (idOrDone) {
-    $script([null], idOrDone)
-  }
-
-  return $script
-});
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
-var core = module.exports = { version: '2.5.1' };
-if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
-var global = module.exports = typeof window != 'undefined' && window.Math == Math
-  ? window : typeof self != 'undefined' && self.Math == Math ? self
-  // eslint-disable-next-line no-new-func
-  : Function('return this')();
-if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// Thank's IE8 for his funny defineProperty
-module.exports = !__webpack_require__(9)(function () {
-  return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
-});
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var global = __webpack_require__(4);
-var core = __webpack_require__(3);
-var ctx = __webpack_require__(45);
-var hide = __webpack_require__(10);
-var PROTOTYPE = 'prototype';
-
-var $export = function (type, name, source) {
-  var IS_FORCED = type & $export.F;
-  var IS_GLOBAL = type & $export.G;
-  var IS_STATIC = type & $export.S;
-  var IS_PROTO = type & $export.P;
-  var IS_BIND = type & $export.B;
-  var IS_WRAP = type & $export.W;
-  var exports = IS_GLOBAL ? core : core[name] || (core[name] = {});
-  var expProto = exports[PROTOTYPE];
-  var target = IS_GLOBAL ? global : IS_STATIC ? global[name] : (global[name] || {})[PROTOTYPE];
-  var key, own, out;
-  if (IS_GLOBAL) source = name;
-  for (key in source) {
-    // contains in native
-    own = !IS_FORCED && target && target[key] !== undefined;
-    if (own && key in exports) continue;
-    // export native or passed
-    out = own ? target[key] : source[key];
-    // prevent global pollution for namespaces
-    exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key]
-    // bind timers to global for call from export context
-    : IS_BIND && own ? ctx(out, global)
-    // wrap global constructors for prevent change them in library
-    : IS_WRAP && target[key] == out ? (function (C) {
-      var F = function (a, b, c) {
-        if (this instanceof C) {
-          switch (arguments.length) {
-            case 0: return new C();
-            case 1: return new C(a);
-            case 2: return new C(a, b);
-          } return new C(a, b, c);
-        } return C.apply(this, arguments);
-      };
-      F[PROTOTYPE] = C[PROTOTYPE];
-      return F;
-    // make static versions for prototype methods
-    })(out) : IS_PROTO && typeof out == 'function' ? ctx(Function.call, out) : out;
-    // export proto methods to core.%CONSTRUCTOR%.methods.%NAME%
-    if (IS_PROTO) {
-      (exports.virtual || (exports.virtual = {}))[key] = out;
-      // export proto methods to core.%CONSTRUCTOR%.prototype.%NAME%
-      if (type & $export.R && expProto && !expProto[key]) hide(expProto, key, out);
-    }
-  }
-};
-// type bitmap
-$export.F = 1;   // forced
-$export.G = 2;   // global
-$export.S = 4;   // static
-$export.P = 8;   // proto
-$export.B = 16;  // bind
-$export.W = 32;  // wrap
-$export.U = 64;  // safe
-$export.R = 128; // real proto method for `library`
-module.exports = $export;
-
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports) {
-
-var hasOwnProperty = {}.hasOwnProperty;
-module.exports = function (it, key) {
-  return hasOwnProperty.call(it, key);
-};
-
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var anObject = __webpack_require__(14);
-var IE8_DOM_DEFINE = __webpack_require__(47);
-var toPrimitive = __webpack_require__(34);
-var dP = Object.defineProperty;
-
-exports.f = __webpack_require__(5) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
-  anObject(O);
-  P = toPrimitive(P, true);
-  anObject(Attributes);
-  if (IE8_DOM_DEFINE) try {
-    return dP(O, P, Attributes);
-  } catch (e) { /* empty */ }
-  if ('get' in Attributes || 'set' in Attributes) throw TypeError('Accessors not supported!');
-  if ('value' in Attributes) O[P] = Attributes.value;
-  return O;
-};
-
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports) {
-
-module.exports = function (exec) {
-  try {
-    return !!exec();
-  } catch (e) {
-    return true;
-  }
-};
-
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dP = __webpack_require__(8);
-var createDesc = __webpack_require__(20);
-module.exports = __webpack_require__(5) ? function (object, key, value) {
-  return dP.f(object, key, createDesc(1, value));
-} : function (object, key, value) {
-  object[key] = value;
-  return object;
-};
-
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// to indexed object, toObject with fallback for non-array-like ES3 strings
-var IObject = __webpack_require__(48);
-var defined = __webpack_require__(23);
-module.exports = function (it) {
-  return IObject(defined(it));
-};
-
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var store = __webpack_require__(31)('wks');
-var uid = __webpack_require__(21);
-var Symbol = __webpack_require__(4).Symbol;
-var USE_SYMBOL = typeof Symbol == 'function';
-
-var $exports = module.exports = function (name) {
-  return store[name] || (store[name] =
-    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
-};
-
-$exports.store = store;
-
-
-/***/ }),
+/* 2 */,
+/* 3 */,
+/* 4 */,
+/* 5 */,
+/* 6 */,
+/* 7 */,
+/* 8 */,
+/* 9 */,
+/* 10 */,
+/* 11 */,
+/* 12 */,
 /* 13 */
 /***/ (function(module, exports) {
 
@@ -618,26 +310,8 @@ module.exports = g;
 
 
 /***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var isObject = __webpack_require__(15);
-module.exports = function (it) {
-  if (!isObject(it)) throw TypeError(it + ' is not an object!');
-  return it;
-};
-
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports) {
-
-module.exports = function (it) {
-  return typeof it === 'object' ? it !== null : typeof it === 'function';
-};
-
-
-/***/ }),
+/* 14 */,
+/* 15 */,
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1190,51 +864,10 @@ var convertCurry = convert.bind(null, __WEBPACK_IMPORTED_MODULE_2_react___defaul
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(13), __webpack_require__(0)))
 
 /***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.2.14 / 15.2.3.14 Object.keys(O)
-var $keys = __webpack_require__(53);
-var enumBugKeys = __webpack_require__(24);
-
-module.exports = Object.keys || function keys(O) {
-  return $keys(O, enumBugKeys);
-};
-
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports) {
-
-exports.f = {}.propertyIsEnumerable;
-
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports) {
-
-module.exports = function (bitmap, value) {
-  return {
-    enumerable: !(bitmap & 1),
-    configurable: !(bitmap & 2),
-    writable: !(bitmap & 4),
-    value: value
-  };
-};
-
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports) {
-
-var id = 0;
-var px = Math.random();
-module.exports = function (key) {
-  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
-};
-
-
-/***/ }),
+/* 18 */,
+/* 19 */,
+/* 20 */,
+/* 21 */,
 /* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1265,194 +898,20 @@ function numberWithCommas(x) {
 }
 
 /***/ }),
-/* 23 */
-/***/ (function(module, exports) {
-
-// 7.2.1 RequireObjectCoercible(argument)
-module.exports = function (it) {
-  if (it == undefined) throw TypeError("Can't call method on  " + it);
-  return it;
-};
-
-
-/***/ }),
-/* 24 */
-/***/ (function(module, exports) {
-
-// IE 8- don't enum bug keys
-module.exports = (
-  'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
-).split(',');
-
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports) {
-
-module.exports = {};
-
-
-/***/ }),
-/* 26 */
-/***/ (function(module, exports) {
-
-module.exports = true;
-
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-var anObject = __webpack_require__(14);
-var dPs = __webpack_require__(101);
-var enumBugKeys = __webpack_require__(24);
-var IE_PROTO = __webpack_require__(30)('IE_PROTO');
-var Empty = function () { /* empty */ };
-var PROTOTYPE = 'prototype';
-
-// Create object with fake `null` prototype: use iframe Object with cleared prototype
-var createDict = function () {
-  // Thrash, waste and sodomy: IE GC bug
-  var iframe = __webpack_require__(46)('iframe');
-  var i = enumBugKeys.length;
-  var lt = '<';
-  var gt = '>';
-  var iframeDocument;
-  iframe.style.display = 'none';
-  __webpack_require__(95).appendChild(iframe);
-  iframe.src = 'javascript:'; // eslint-disable-line no-script-url
-  // createDict = iframe.contentWindow.Object;
-  // html.removeChild(iframe);
-  iframeDocument = iframe.contentWindow.document;
-  iframeDocument.open();
-  iframeDocument.write(lt + 'script' + gt + 'document.F=Object' + lt + '/script' + gt);
-  iframeDocument.close();
-  createDict = iframeDocument.F;
-  while (i--) delete createDict[PROTOTYPE][enumBugKeys[i]];
-  return createDict();
-};
-
-module.exports = Object.create || function create(O, Properties) {
-  var result;
-  if (O !== null) {
-    Empty[PROTOTYPE] = anObject(O);
-    result = new Empty();
-    Empty[PROTOTYPE] = null;
-    // add "__proto__" for Object.getPrototypeOf polyfill
-    result[IE_PROTO] = O;
-  } else result = createDict();
-  return Properties === undefined ? result : dPs(result, Properties);
-};
-
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports) {
-
-exports.f = Object.getOwnPropertySymbols;
-
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var def = __webpack_require__(8).f;
-var has = __webpack_require__(7);
-var TAG = __webpack_require__(12)('toStringTag');
-
-module.exports = function (it, tag, stat) {
-  if (it && !has(it = stat ? it : it.prototype, TAG)) def(it, TAG, { configurable: true, value: tag });
-};
-
-
-/***/ }),
-/* 30 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var shared = __webpack_require__(31)('keys');
-var uid = __webpack_require__(21);
-module.exports = function (key) {
-  return shared[key] || (shared[key] = uid(key));
-};
-
-
-/***/ }),
-/* 31 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var global = __webpack_require__(4);
-var SHARED = '__core-js_shared__';
-var store = global[SHARED] || (global[SHARED] = {});
-module.exports = function (key) {
-  return store[key] || (store[key] = {});
-};
-
-
-/***/ }),
-/* 32 */
-/***/ (function(module, exports) {
-
-// 7.1.4 ToInteger
-var ceil = Math.ceil;
-var floor = Math.floor;
-module.exports = function (it) {
-  return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
-};
-
-
-/***/ }),
-/* 33 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 7.1.13 ToObject(argument)
-var defined = __webpack_require__(23);
-module.exports = function (it) {
-  return Object(defined(it));
-};
-
-
-/***/ }),
-/* 34 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 7.1.1 ToPrimitive(input [, PreferredType])
-var isObject = __webpack_require__(15);
-// instead of the ES6 spec version, we didn't implement @@toPrimitive case
-// and the second argument - flag - preferred type is a string
-module.exports = function (it, S) {
-  if (!isObject(it)) return it;
-  var fn, val;
-  if (S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
-  if (typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it))) return val;
-  if (!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
-  throw TypeError("Can't convert object to primitive value");
-};
-
-
-/***/ }),
-/* 35 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var global = __webpack_require__(4);
-var core = __webpack_require__(3);
-var LIBRARY = __webpack_require__(26);
-var wksExt = __webpack_require__(36);
-var defineProperty = __webpack_require__(8).f;
-module.exports = function (name) {
-  var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
-  if (name.charAt(0) != '_' && !(name in $Symbol)) defineProperty($Symbol, name, { value: wksExt.f(name) });
-};
-
-
-/***/ }),
-/* 36 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports.f = __webpack_require__(12);
-
-
-/***/ }),
+/* 23 */,
+/* 24 */,
+/* 25 */,
+/* 26 */,
+/* 27 */,
+/* 28 */,
+/* 29 */,
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */,
+/* 34 */,
+/* 35 */,
+/* 36 */,
 /* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4218,69 +3677,48 @@ var ActionForm = function (_Component) {
       }
 
       if (this.state.sent) {
-        modal = _react2.default.createElement(
-          'div',
-          {
-            className: 'modal-wrapper-call-ftc',
-            style: {
-              'display': this.state.sent ? 'block' : 'none'
-            } },
-          _react2.default.createElement(
-            'div',
-            { className: 'modal-call-ftc' },
-            _react2.default.createElement(
-              'a',
-              {
-                href: '#',
-                style: {
-                  'fontSize': '250%'
-                },
-                onClick: this.closeModal },
-              '\xD7'
-            ),
-            _react2.default.createElement(
-              'header',
-              null,
-              _react2.default.createElement(
-                'h2',
-                null,
-                'Please call the FTC and tell commissioners to break up Facebook!'
-              )
-            ),
-            _react2.default.createElement(
-              'h3',
-              { style: {
-                  'textAlign': 'center'
-                } },
-              'Call Now:'
-            ),
-            _react2.default.createElement(
-              'h3',
-              { style: {
-                  'textAlign': 'center'
-                } },
-              '919-926-9388'
-            ),
-            _react2.default.createElement(
-              'p',
-              { style: {
-                  'textAlign': 'center'
-                } },
-              'We\u2019ll connect you to FTC commissioners. You can use this script \u2014 just introduce yourself, be polite, and say:'
-            ),
-            _react2.default.createElement(
-              'p',
-              { style: {
-                  'textAlign': 'center'
-                } },
-              _react2.default.createElement(
-                'em',
-                null,
-                '"I\'m calling to ask that the FTC pursue a breakup of Facebook, forcing them to sell off WhatsApp, Instagram, and Messenger. Even a big fine won\u2019t be enough to change their ways. It\u2019s time to restore democracy and competition to social media through strong antitrust action. Thank you."'
-              )
-            )
-          )
-        );
+        // modal = (
+        //   <div
+        //     className='modal-wrapper-call-ftc'
+        //     style={{
+        //     'display': this.state.sent
+        //       ? 'block'
+        //       : 'none'
+        //   }}>
+        //     <div className='modal-call-ftc'>
+        //       <a
+        //         href="#"
+        //         style={{
+        //         'fontSize': '250%'
+        //       }}
+        //         onClick={this.closeModal}>×</a>
+        //       <header>
+        //         <h2>Please call the FTC and tell commissioners to break up Facebook!</h2>
+        //       </header>
+        //       <h3 style={{
+        //         'textAlign': 'center'
+        //       }}>Call Now:</h3>
+        //       <h3 style={{
+        //         'textAlign': 'center'
+        //       }}>919-926-9388</h3>
+        //       <p style={{
+        //         'textAlign': 'center'
+        //       }}>We’ll connect you
+        //         to FTC commissioners. You can use this script — just introduce yourself, be
+        //         polite, and say:</p>
+        //       <p style={{
+        //         'textAlign': 'center'
+        //       }}>
+        //         <em>"I'm calling to ask that the FTC pursue a breakup of Facebook, forcing them
+        //           to sell off WhatsApp, Instagram, and Messenger. Even a big fine won’t be enough
+        //           to change their ways. It’s time to restore democracy and competition to social
+        //           media through strong antitrust action. Thank you."
+        //         </em>
+        //       </p>
+        //     </div>
+        //   </div>
+        // )
+        modal = _react2.default.createElement('span', null);
       }
 
       return _react2.default.createElement(
@@ -4323,265 +3761,18 @@ var ActionForm = function (_Component) {
 exports.default = ActionForm;
 
 /***/ }),
-/* 43 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _iterator = __webpack_require__(79);
-
-var _iterator2 = _interopRequireDefault(_iterator);
-
-var _symbol = __webpack_require__(78);
-
-var _symbol2 = _interopRequireDefault(_symbol);
-
-var _typeof = typeof _symbol2.default === "function" && typeof _iterator2.default === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj; };
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.default) === "symbol" ? function (obj) {
-  return typeof obj === "undefined" ? "undefined" : _typeof(obj);
-} : function (obj) {
-  return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof(obj);
-};
-
-/***/ }),
-/* 44 */
-/***/ (function(module, exports) {
-
-var toString = {}.toString;
-
-module.exports = function (it) {
-  return toString.call(it).slice(8, -1);
-};
-
-
-/***/ }),
-/* 45 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// optional / simple context binding
-var aFunction = __webpack_require__(91);
-module.exports = function (fn, that, length) {
-  aFunction(fn);
-  if (that === undefined) return fn;
-  switch (length) {
-    case 1: return function (a) {
-      return fn.call(that, a);
-    };
-    case 2: return function (a, b) {
-      return fn.call(that, a, b);
-    };
-    case 3: return function (a, b, c) {
-      return fn.call(that, a, b, c);
-    };
-  }
-  return function (/* ...args */) {
-    return fn.apply(that, arguments);
-  };
-};
-
-
-/***/ }),
-/* 46 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var isObject = __webpack_require__(15);
-var document = __webpack_require__(4).document;
-// typeof document.createElement is 'object' in old IE
-var is = isObject(document) && isObject(document.createElement);
-module.exports = function (it) {
-  return is ? document.createElement(it) : {};
-};
-
-
-/***/ }),
-/* 47 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = !__webpack_require__(5) && !__webpack_require__(9)(function () {
-  return Object.defineProperty(__webpack_require__(46)('div'), 'a', { get: function () { return 7; } }).a != 7;
-});
-
-
-/***/ }),
-/* 48 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// fallback for non-array-like ES3 and non-enumerable old V8 strings
-var cof = __webpack_require__(44);
-// eslint-disable-next-line no-prototype-builtins
-module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
-  return cof(it) == 'String' ? it.split('') : Object(it);
-};
-
-
-/***/ }),
-/* 49 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var LIBRARY = __webpack_require__(26);
-var $export = __webpack_require__(6);
-var redefine = __webpack_require__(54);
-var hide = __webpack_require__(10);
-var has = __webpack_require__(7);
-var Iterators = __webpack_require__(25);
-var $iterCreate = __webpack_require__(97);
-var setToStringTag = __webpack_require__(29);
-var getPrototypeOf = __webpack_require__(52);
-var ITERATOR = __webpack_require__(12)('iterator');
-var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
-var FF_ITERATOR = '@@iterator';
-var KEYS = 'keys';
-var VALUES = 'values';
-
-var returnThis = function () { return this; };
-
-module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCED) {
-  $iterCreate(Constructor, NAME, next);
-  var getMethod = function (kind) {
-    if (!BUGGY && kind in proto) return proto[kind];
-    switch (kind) {
-      case KEYS: return function keys() { return new Constructor(this, kind); };
-      case VALUES: return function values() { return new Constructor(this, kind); };
-    } return function entries() { return new Constructor(this, kind); };
-  };
-  var TAG = NAME + ' Iterator';
-  var DEF_VALUES = DEFAULT == VALUES;
-  var VALUES_BUG = false;
-  var proto = Base.prototype;
-  var $native = proto[ITERATOR] || proto[FF_ITERATOR] || DEFAULT && proto[DEFAULT];
-  var $default = $native || getMethod(DEFAULT);
-  var $entries = DEFAULT ? !DEF_VALUES ? $default : getMethod('entries') : undefined;
-  var $anyNative = NAME == 'Array' ? proto.entries || $native : $native;
-  var methods, key, IteratorPrototype;
-  // Fix native
-  if ($anyNative) {
-    IteratorPrototype = getPrototypeOf($anyNative.call(new Base()));
-    if (IteratorPrototype !== Object.prototype && IteratorPrototype.next) {
-      // Set @@toStringTag to native iterators
-      setToStringTag(IteratorPrototype, TAG, true);
-      // fix for some old engines
-      if (!LIBRARY && !has(IteratorPrototype, ITERATOR)) hide(IteratorPrototype, ITERATOR, returnThis);
-    }
-  }
-  // fix Array#{values, @@iterator}.name in V8 / FF
-  if (DEF_VALUES && $native && $native.name !== VALUES) {
-    VALUES_BUG = true;
-    $default = function values() { return $native.call(this); };
-  }
-  // Define iterator
-  if ((!LIBRARY || FORCED) && (BUGGY || VALUES_BUG || !proto[ITERATOR])) {
-    hide(proto, ITERATOR, $default);
-  }
-  // Plug for library
-  Iterators[NAME] = $default;
-  Iterators[TAG] = returnThis;
-  if (DEFAULT) {
-    methods = {
-      values: DEF_VALUES ? $default : getMethod(VALUES),
-      keys: IS_SET ? $default : getMethod(KEYS),
-      entries: $entries
-    };
-    if (FORCED) for (key in methods) {
-      if (!(key in proto)) redefine(proto, key, methods[key]);
-    } else $export($export.P + $export.F * (BUGGY || VALUES_BUG), NAME, methods);
-  }
-  return methods;
-};
-
-
-/***/ }),
-/* 50 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var pIE = __webpack_require__(19);
-var createDesc = __webpack_require__(20);
-var toIObject = __webpack_require__(11);
-var toPrimitive = __webpack_require__(34);
-var has = __webpack_require__(7);
-var IE8_DOM_DEFINE = __webpack_require__(47);
-var gOPD = Object.getOwnPropertyDescriptor;
-
-exports.f = __webpack_require__(5) ? gOPD : function getOwnPropertyDescriptor(O, P) {
-  O = toIObject(O);
-  P = toPrimitive(P, true);
-  if (IE8_DOM_DEFINE) try {
-    return gOPD(O, P);
-  } catch (e) { /* empty */ }
-  if (has(O, P)) return createDesc(!pIE.f.call(O, P), O[P]);
-};
-
-
-/***/ }),
-/* 51 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
-var $keys = __webpack_require__(53);
-var hiddenKeys = __webpack_require__(24).concat('length', 'prototype');
-
-exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
-  return $keys(O, hiddenKeys);
-};
-
-
-/***/ }),
-/* 52 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
-var has = __webpack_require__(7);
-var toObject = __webpack_require__(33);
-var IE_PROTO = __webpack_require__(30)('IE_PROTO');
-var ObjectProto = Object.prototype;
-
-module.exports = Object.getPrototypeOf || function (O) {
-  O = toObject(O);
-  if (has(O, IE_PROTO)) return O[IE_PROTO];
-  if (typeof O.constructor == 'function' && O instanceof O.constructor) {
-    return O.constructor.prototype;
-  } return O instanceof Object ? ObjectProto : null;
-};
-
-
-/***/ }),
-/* 53 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var has = __webpack_require__(7);
-var toIObject = __webpack_require__(11);
-var arrayIndexOf = __webpack_require__(93)(false);
-var IE_PROTO = __webpack_require__(30)('IE_PROTO');
-
-module.exports = function (object, names) {
-  var O = toIObject(object);
-  var i = 0;
-  var result = [];
-  var key;
-  for (key in O) if (key != IE_PROTO) has(O, key) && result.push(key);
-  // Don't enum bug & hidden keys
-  while (names.length > i) if (has(O, key = names[i++])) {
-    ~arrayIndexOf(result, key) || result.push(key);
-  }
-  return result;
-};
-
-
-/***/ }),
-/* 54 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(10);
-
-
-/***/ }),
+/* 43 */,
+/* 44 */,
+/* 45 */,
+/* 46 */,
+/* 47 */,
+/* 48 */,
+/* 49 */,
+/* 50 */,
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */,
 /* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4745,9 +3936,9 @@ var _Ftc = __webpack_require__(70);
 
 var _Ftc2 = _interopRequireDefault(_Ftc);
 
-var _Tweet = __webpack_require__(72);
+var _Modal = __webpack_require__(141);
 
-var _Tweet2 = _interopRequireDefault(_Tweet);
+var _Modal2 = _interopRequireDefault(_Modal);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4763,18 +3954,28 @@ _fontawesomeSvgCore.library.add(_freeBrandsSvgIcons.fab, _freeRegularSvgIcons.fa
 var App = function (_Component) {
   _inherits(App, _Component);
 
+  // <Main />
   function App() {
     _classCallCheck(this, App);
 
-    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
+
+    _this.state = {
+      modalOpen: false
+    };
+    _this.toggleModal = _this.toggleModal.bind(_this);
+    return _this;
   }
 
   _createClass(App, [{
     key: 'componentDidMount',
-
-    // <Main />
     value: function componentDidMount() {
       window.scrollTo(0, 0);
+    }
+  }, {
+    key: 'toggleModal',
+    value: function toggleModal() {
+      this.setState({ modalOpen: !this.state.modalOpen });
     }
   }, {
     key: 'render',
@@ -4782,8 +3983,9 @@ var App = function (_Component) {
       return _react2.default.createElement(
         'div',
         null,
+        _react2.default.createElement(_Modal2.default, { open: this.state.modalOpen, modalToggle: this.toggleModal }),
         _react2.default.createElement(_Header2.default, null),
-        _react2.default.createElement(_Ftc2.default, null),
+        _react2.default.createElement(_Ftc2.default, { modalToggle: this.toggleModal }),
         _react2.default.createElement(_About2.default, null),
         _react2.default.createElement(_Footer2.default, null)
       );
@@ -15833,11 +15035,14 @@ var Form = function (_Component) {
   }, {
     key: 'formSubmitted',
     value: function formSubmitted(evt) {
+      var self = this;
       evt.preventDefault();
+
       setTimeout(function () {
         this.setState({
           submitted: true
         }, function () {
+          self.props.modalToggle();
           window.scrollTo(0, 0);
         });
       }.bind(this), 5000);
@@ -15847,7 +15052,7 @@ var Form = function (_Component) {
     value: function render() {
       var form = null;
 
-      form = _react2.default.createElement(_ActionForm2.default, { formSubmitted: this.formSubmitted });
+      form = _react2.default.createElement(_ActionForm2.default, { formSubmitted: this.formSubmitted, modalToggle: this.props.modalToggle });
       //   if (!this.state.submitted) {
       //   return (
       //     <div>    
@@ -15908,10 +15113,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Ftc = function (_Component) {
     _inherits(Ftc, _Component);
 
-    function Ftc() {
+    function Ftc(props) {
         _classCallCheck(this, Ftc);
 
-        return _possibleConstructorReturn(this, (Ftc.__proto__ || Object.getPrototypeOf(Ftc)).apply(this, arguments));
+        return _possibleConstructorReturn(this, (Ftc.__proto__ || Object.getPrototypeOf(Ftc)).call(this, props));
     }
 
     _createClass(Ftc, [{
@@ -15964,7 +15169,7 @@ var Ftc = function (_Component) {
                             'It\'s time to break up Facebook'
                         )
                     ),
-                    _react2.default.createElement(_Form2.default, null),
+                    _react2.default.createElement(_Form2.default, { modalToggle: this.props.modalToggle }),
                     _react2.default.createElement('div', { className: 'clearfix' }),
                     _react2.default.createElement(
                         'p',
@@ -16118,1087 +15323,55 @@ var Header = function (_Component) {
 exports.default = Header;
 
 /***/ }),
-/* 72 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactTwitterEmbed = __webpack_require__(129);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Tweet = function (_Component) {
-    _inherits(Tweet, _Component);
-
-    function Tweet() {
-        _classCallCheck(this, Tweet);
-
-        return _possibleConstructorReturn(this, (Tweet.__proto__ || Object.getPrototypeOf(Tweet)).apply(this, arguments));
-    }
-
-    _createClass(Tweet, [{
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                'section',
-                { id: 'tweets' },
-                _react2.default.createElement(_reactTwitterEmbed.TwitterTimelineEmbed, {
-                    sourceType: 'profile',
-                    screenName: 'facebookbreakup',
-                    noHeader: true,
-                    noFooter: true,
-                    noBorders: true,
-                    options: { height: 768 }
-                })
-            );
-        }
-    }]);
-
-    return Tweet;
-}(_react.Component);
-
-exports.default = Tweet;
-
-/***/ }),
-/* 73 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(84), __esModule: true };
-
-/***/ }),
-/* 74 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(85), __esModule: true };
-
-/***/ }),
-/* 75 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(86), __esModule: true };
-
-/***/ }),
-/* 76 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(87), __esModule: true };
-
-/***/ }),
-/* 77 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(88), __esModule: true };
-
-/***/ }),
-/* 78 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(89), __esModule: true };
-
-/***/ }),
-/* 79 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(90), __esModule: true };
-
-/***/ }),
-/* 80 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-exports.default = function (instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-};
-
-/***/ }),
-/* 81 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _defineProperty = __webpack_require__(75);
-
-var _defineProperty2 = _interopRequireDefault(_defineProperty);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      (0, _defineProperty2.default)(target, descriptor.key, descriptor);
-    }
-  }
-
-  return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) defineProperties(Constructor, staticProps);
-    return Constructor;
-  };
-}();
-
-/***/ }),
-/* 82 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _setPrototypeOf = __webpack_require__(77);
-
-var _setPrototypeOf2 = _interopRequireDefault(_setPrototypeOf);
-
-var _create = __webpack_require__(74);
-
-var _create2 = _interopRequireDefault(_create);
-
-var _typeof2 = __webpack_require__(43);
-
-var _typeof3 = _interopRequireDefault(_typeof2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function (subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : (0, _typeof3.default)(superClass)));
-  }
-
-  subClass.prototype = (0, _create2.default)(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      enumerable: false,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (superClass) _setPrototypeOf2.default ? (0, _setPrototypeOf2.default)(subClass, superClass) : subClass.__proto__ = superClass;
-};
-
-/***/ }),
-/* 83 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _typeof2 = __webpack_require__(43);
-
-var _typeof3 = _interopRequireDefault(_typeof2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function (self, call) {
-  if (!self) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return call && ((typeof call === "undefined" ? "undefined" : (0, _typeof3.default)(call)) === "object" || typeof call === "function") ? call : self;
-};
-
-/***/ }),
-/* 84 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(109);
-module.exports = __webpack_require__(3).Object.assign;
-
-
-/***/ }),
-/* 85 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(110);
-var $Object = __webpack_require__(3).Object;
-module.exports = function create(P, D) {
-  return $Object.create(P, D);
-};
-
-
-/***/ }),
-/* 86 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(111);
-var $Object = __webpack_require__(3).Object;
-module.exports = function defineProperty(it, key, desc) {
-  return $Object.defineProperty(it, key, desc);
-};
-
-
-/***/ }),
-/* 87 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(112);
-module.exports = __webpack_require__(3).Object.getPrototypeOf;
-
-
-/***/ }),
-/* 88 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(113);
-module.exports = __webpack_require__(3).Object.setPrototypeOf;
-
-
-/***/ }),
-/* 89 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(116);
-__webpack_require__(114);
-__webpack_require__(117);
-__webpack_require__(118);
-module.exports = __webpack_require__(3).Symbol;
-
-
-/***/ }),
-/* 90 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(115);
-__webpack_require__(119);
-module.exports = __webpack_require__(36).f('iterator');
-
-
-/***/ }),
-/* 91 */
-/***/ (function(module, exports) {
-
-module.exports = function (it) {
-  if (typeof it != 'function') throw TypeError(it + ' is not a function!');
-  return it;
-};
-
-
-/***/ }),
-/* 92 */
-/***/ (function(module, exports) {
-
-module.exports = function () { /* empty */ };
-
-
-/***/ }),
-/* 93 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// false -> Array#indexOf
-// true  -> Array#includes
-var toIObject = __webpack_require__(11);
-var toLength = __webpack_require__(107);
-var toAbsoluteIndex = __webpack_require__(106);
-module.exports = function (IS_INCLUDES) {
-  return function ($this, el, fromIndex) {
-    var O = toIObject($this);
-    var length = toLength(O.length);
-    var index = toAbsoluteIndex(fromIndex, length);
-    var value;
-    // Array#includes uses SameValueZero equality algorithm
-    // eslint-disable-next-line no-self-compare
-    if (IS_INCLUDES && el != el) while (length > index) {
-      value = O[index++];
-      // eslint-disable-next-line no-self-compare
-      if (value != value) return true;
-    // Array#indexOf ignores holes, Array#includes - not
-    } else for (;length > index; index++) if (IS_INCLUDES || index in O) {
-      if (O[index] === el) return IS_INCLUDES || index || 0;
-    } return !IS_INCLUDES && -1;
-  };
-};
-
-
-/***/ }),
-/* 94 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// all enumerable object keys, includes symbols
-var getKeys = __webpack_require__(18);
-var gOPS = __webpack_require__(28);
-var pIE = __webpack_require__(19);
-module.exports = function (it) {
-  var result = getKeys(it);
-  var getSymbols = gOPS.f;
-  if (getSymbols) {
-    var symbols = getSymbols(it);
-    var isEnum = pIE.f;
-    var i = 0;
-    var key;
-    while (symbols.length > i) if (isEnum.call(it, key = symbols[i++])) result.push(key);
-  } return result;
-};
-
-
-/***/ }),
-/* 95 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var document = __webpack_require__(4).document;
-module.exports = document && document.documentElement;
-
-
-/***/ }),
-/* 96 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 7.2.2 IsArray(argument)
-var cof = __webpack_require__(44);
-module.exports = Array.isArray || function isArray(arg) {
-  return cof(arg) == 'Array';
-};
-
-
-/***/ }),
-/* 97 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var create = __webpack_require__(27);
-var descriptor = __webpack_require__(20);
-var setToStringTag = __webpack_require__(29);
-var IteratorPrototype = {};
-
-// 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(10)(IteratorPrototype, __webpack_require__(12)('iterator'), function () { return this; });
-
-module.exports = function (Constructor, NAME, next) {
-  Constructor.prototype = create(IteratorPrototype, { next: descriptor(1, next) });
-  setToStringTag(Constructor, NAME + ' Iterator');
-};
-
-
-/***/ }),
-/* 98 */
-/***/ (function(module, exports) {
-
-module.exports = function (done, value) {
-  return { value: value, done: !!done };
-};
-
-
-/***/ }),
-/* 99 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var META = __webpack_require__(21)('meta');
-var isObject = __webpack_require__(15);
-var has = __webpack_require__(7);
-var setDesc = __webpack_require__(8).f;
-var id = 0;
-var isExtensible = Object.isExtensible || function () {
-  return true;
-};
-var FREEZE = !__webpack_require__(9)(function () {
-  return isExtensible(Object.preventExtensions({}));
-});
-var setMeta = function (it) {
-  setDesc(it, META, { value: {
-    i: 'O' + ++id, // object ID
-    w: {}          // weak collections IDs
-  } });
-};
-var fastKey = function (it, create) {
-  // return primitive with prefix
-  if (!isObject(it)) return typeof it == 'symbol' ? it : (typeof it == 'string' ? 'S' : 'P') + it;
-  if (!has(it, META)) {
-    // can't set metadata to uncaught frozen object
-    if (!isExtensible(it)) return 'F';
-    // not necessary to add metadata
-    if (!create) return 'E';
-    // add missing metadata
-    setMeta(it);
-  // return object ID
-  } return it[META].i;
-};
-var getWeak = function (it, create) {
-  if (!has(it, META)) {
-    // can't set metadata to uncaught frozen object
-    if (!isExtensible(it)) return true;
-    // not necessary to add metadata
-    if (!create) return false;
-    // add missing metadata
-    setMeta(it);
-  // return hash weak collections IDs
-  } return it[META].w;
-};
-// add metadata on freeze-family methods calling
-var onFreeze = function (it) {
-  if (FREEZE && meta.NEED && isExtensible(it) && !has(it, META)) setMeta(it);
-  return it;
-};
-var meta = module.exports = {
-  KEY: META,
-  NEED: false,
-  fastKey: fastKey,
-  getWeak: getWeak,
-  onFreeze: onFreeze
-};
-
-
-/***/ }),
-/* 100 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-// 19.1.2.1 Object.assign(target, source, ...)
-var getKeys = __webpack_require__(18);
-var gOPS = __webpack_require__(28);
-var pIE = __webpack_require__(19);
-var toObject = __webpack_require__(33);
-var IObject = __webpack_require__(48);
-var $assign = Object.assign;
-
-// should work with symbols and should have deterministic property order (V8 bug)
-module.exports = !$assign || __webpack_require__(9)(function () {
-  var A = {};
-  var B = {};
-  // eslint-disable-next-line no-undef
-  var S = Symbol();
-  var K = 'abcdefghijklmnopqrst';
-  A[S] = 7;
-  K.split('').forEach(function (k) { B[k] = k; });
-  return $assign({}, A)[S] != 7 || Object.keys($assign({}, B)).join('') != K;
-}) ? function assign(target, source) { // eslint-disable-line no-unused-vars
-  var T = toObject(target);
-  var aLen = arguments.length;
-  var index = 1;
-  var getSymbols = gOPS.f;
-  var isEnum = pIE.f;
-  while (aLen > index) {
-    var S = IObject(arguments[index++]);
-    var keys = getSymbols ? getKeys(S).concat(getSymbols(S)) : getKeys(S);
-    var length = keys.length;
-    var j = 0;
-    var key;
-    while (length > j) if (isEnum.call(S, key = keys[j++])) T[key] = S[key];
-  } return T;
-} : $assign;
-
-
-/***/ }),
-/* 101 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dP = __webpack_require__(8);
-var anObject = __webpack_require__(14);
-var getKeys = __webpack_require__(18);
-
-module.exports = __webpack_require__(5) ? Object.defineProperties : function defineProperties(O, Properties) {
-  anObject(O);
-  var keys = getKeys(Properties);
-  var length = keys.length;
-  var i = 0;
-  var P;
-  while (length > i) dP.f(O, P = keys[i++], Properties[P]);
-  return O;
-};
-
-
-/***/ }),
-/* 102 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
-var toIObject = __webpack_require__(11);
-var gOPN = __webpack_require__(51).f;
-var toString = {}.toString;
-
-var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
-  ? Object.getOwnPropertyNames(window) : [];
-
-var getWindowNames = function (it) {
-  try {
-    return gOPN(it);
-  } catch (e) {
-    return windowNames.slice();
-  }
-};
-
-module.exports.f = function getOwnPropertyNames(it) {
-  return windowNames && toString.call(it) == '[object Window]' ? getWindowNames(it) : gOPN(toIObject(it));
-};
-
-
-/***/ }),
-/* 103 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// most Object methods by ES6 should accept primitives
-var $export = __webpack_require__(6);
-var core = __webpack_require__(3);
-var fails = __webpack_require__(9);
-module.exports = function (KEY, exec) {
-  var fn = (core.Object || {})[KEY] || Object[KEY];
-  var exp = {};
-  exp[KEY] = exec(fn);
-  $export($export.S + $export.F * fails(function () { fn(1); }), 'Object', exp);
-};
-
-
-/***/ }),
-/* 104 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// Works with __proto__ only. Old v8 can't work with null proto objects.
-/* eslint-disable no-proto */
-var isObject = __webpack_require__(15);
-var anObject = __webpack_require__(14);
-var check = function (O, proto) {
-  anObject(O);
-  if (!isObject(proto) && proto !== null) throw TypeError(proto + ": can't set as prototype!");
-};
-module.exports = {
-  set: Object.setPrototypeOf || ('__proto__' in {} ? // eslint-disable-line
-    function (test, buggy, set) {
-      try {
-        set = __webpack_require__(45)(Function.call, __webpack_require__(50).f(Object.prototype, '__proto__').set, 2);
-        set(test, []);
-        buggy = !(test instanceof Array);
-      } catch (e) { buggy = true; }
-      return function setPrototypeOf(O, proto) {
-        check(O, proto);
-        if (buggy) O.__proto__ = proto;
-        else set(O, proto);
-        return O;
-      };
-    }({}, false) : undefined),
-  check: check
-};
-
-
-/***/ }),
-/* 105 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var toInteger = __webpack_require__(32);
-var defined = __webpack_require__(23);
-// true  -> String#at
-// false -> String#codePointAt
-module.exports = function (TO_STRING) {
-  return function (that, pos) {
-    var s = String(defined(that));
-    var i = toInteger(pos);
-    var l = s.length;
-    var a, b;
-    if (i < 0 || i >= l) return TO_STRING ? '' : undefined;
-    a = s.charCodeAt(i);
-    return a < 0xd800 || a > 0xdbff || i + 1 === l || (b = s.charCodeAt(i + 1)) < 0xdc00 || b > 0xdfff
-      ? TO_STRING ? s.charAt(i) : a
-      : TO_STRING ? s.slice(i, i + 2) : (a - 0xd800 << 10) + (b - 0xdc00) + 0x10000;
-  };
-};
-
-
-/***/ }),
-/* 106 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var toInteger = __webpack_require__(32);
-var max = Math.max;
-var min = Math.min;
-module.exports = function (index, length) {
-  index = toInteger(index);
-  return index < 0 ? max(index + length, 0) : min(index, length);
-};
-
-
-/***/ }),
-/* 107 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 7.1.15 ToLength
-var toInteger = __webpack_require__(32);
-var min = Math.min;
-module.exports = function (it) {
-  return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
-};
-
-
-/***/ }),
-/* 108 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var addToUnscopables = __webpack_require__(92);
-var step = __webpack_require__(98);
-var Iterators = __webpack_require__(25);
-var toIObject = __webpack_require__(11);
-
-// 22.1.3.4 Array.prototype.entries()
-// 22.1.3.13 Array.prototype.keys()
-// 22.1.3.29 Array.prototype.values()
-// 22.1.3.30 Array.prototype[@@iterator]()
-module.exports = __webpack_require__(49)(Array, 'Array', function (iterated, kind) {
-  this._t = toIObject(iterated); // target
-  this._i = 0;                   // next index
-  this._k = kind;                // kind
-// 22.1.5.2.1 %ArrayIteratorPrototype%.next()
-}, function () {
-  var O = this._t;
-  var kind = this._k;
-  var index = this._i++;
-  if (!O || index >= O.length) {
-    this._t = undefined;
-    return step(1);
-  }
-  if (kind == 'keys') return step(0, index);
-  if (kind == 'values') return step(0, O[index]);
-  return step(0, [index, O[index]]);
-}, 'values');
-
-// argumentsList[@@iterator] is %ArrayProto_values% (9.4.4.6, 9.4.4.7)
-Iterators.Arguments = Iterators.Array;
-
-addToUnscopables('keys');
-addToUnscopables('values');
-addToUnscopables('entries');
-
-
-/***/ }),
-/* 109 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.3.1 Object.assign(target, source)
-var $export = __webpack_require__(6);
-
-$export($export.S + $export.F, 'Object', { assign: __webpack_require__(100) });
-
-
-/***/ }),
-/* 110 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $export = __webpack_require__(6);
-// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-$export($export.S, 'Object', { create: __webpack_require__(27) });
-
-
-/***/ }),
-/* 111 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $export = __webpack_require__(6);
-// 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
-$export($export.S + $export.F * !__webpack_require__(5), 'Object', { defineProperty: __webpack_require__(8).f });
-
-
-/***/ }),
-/* 112 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.2.9 Object.getPrototypeOf(O)
-var toObject = __webpack_require__(33);
-var $getPrototypeOf = __webpack_require__(52);
-
-__webpack_require__(103)('getPrototypeOf', function () {
-  return function getPrototypeOf(it) {
-    return $getPrototypeOf(toObject(it));
-  };
-});
-
-
-/***/ }),
-/* 113 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.3.19 Object.setPrototypeOf(O, proto)
-var $export = __webpack_require__(6);
-$export($export.S, 'Object', { setPrototypeOf: __webpack_require__(104).set });
-
-
-/***/ }),
-/* 114 */
-/***/ (function(module, exports) {
-
-
-
-/***/ }),
-/* 115 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var $at = __webpack_require__(105)(true);
-
-// 21.1.3.27 String.prototype[@@iterator]()
-__webpack_require__(49)(String, 'String', function (iterated) {
-  this._t = String(iterated); // target
-  this._i = 0;                // next index
-// 21.1.5.2.1 %StringIteratorPrototype%.next()
-}, function () {
-  var O = this._t;
-  var index = this._i;
-  var point;
-  if (index >= O.length) return { value: undefined, done: true };
-  point = $at(O, index);
-  this._i += point.length;
-  return { value: point, done: false };
-});
-
-
-/***/ }),
-/* 116 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-// ECMAScript 6 symbols shim
-var global = __webpack_require__(4);
-var has = __webpack_require__(7);
-var DESCRIPTORS = __webpack_require__(5);
-var $export = __webpack_require__(6);
-var redefine = __webpack_require__(54);
-var META = __webpack_require__(99).KEY;
-var $fails = __webpack_require__(9);
-var shared = __webpack_require__(31);
-var setToStringTag = __webpack_require__(29);
-var uid = __webpack_require__(21);
-var wks = __webpack_require__(12);
-var wksExt = __webpack_require__(36);
-var wksDefine = __webpack_require__(35);
-var enumKeys = __webpack_require__(94);
-var isArray = __webpack_require__(96);
-var anObject = __webpack_require__(14);
-var toIObject = __webpack_require__(11);
-var toPrimitive = __webpack_require__(34);
-var createDesc = __webpack_require__(20);
-var _create = __webpack_require__(27);
-var gOPNExt = __webpack_require__(102);
-var $GOPD = __webpack_require__(50);
-var $DP = __webpack_require__(8);
-var $keys = __webpack_require__(18);
-var gOPD = $GOPD.f;
-var dP = $DP.f;
-var gOPN = gOPNExt.f;
-var $Symbol = global.Symbol;
-var $JSON = global.JSON;
-var _stringify = $JSON && $JSON.stringify;
-var PROTOTYPE = 'prototype';
-var HIDDEN = wks('_hidden');
-var TO_PRIMITIVE = wks('toPrimitive');
-var isEnum = {}.propertyIsEnumerable;
-var SymbolRegistry = shared('symbol-registry');
-var AllSymbols = shared('symbols');
-var OPSymbols = shared('op-symbols');
-var ObjectProto = Object[PROTOTYPE];
-var USE_NATIVE = typeof $Symbol == 'function';
-var QObject = global.QObject;
-// Don't use setters in Qt Script, https://github.com/zloirock/core-js/issues/173
-var setter = !QObject || !QObject[PROTOTYPE] || !QObject[PROTOTYPE].findChild;
-
-// fallback for old Android, https://code.google.com/p/v8/issues/detail?id=687
-var setSymbolDesc = DESCRIPTORS && $fails(function () {
-  return _create(dP({}, 'a', {
-    get: function () { return dP(this, 'a', { value: 7 }).a; }
-  })).a != 7;
-}) ? function (it, key, D) {
-  var protoDesc = gOPD(ObjectProto, key);
-  if (protoDesc) delete ObjectProto[key];
-  dP(it, key, D);
-  if (protoDesc && it !== ObjectProto) dP(ObjectProto, key, protoDesc);
-} : dP;
-
-var wrap = function (tag) {
-  var sym = AllSymbols[tag] = _create($Symbol[PROTOTYPE]);
-  sym._k = tag;
-  return sym;
-};
-
-var isSymbol = USE_NATIVE && typeof $Symbol.iterator == 'symbol' ? function (it) {
-  return typeof it == 'symbol';
-} : function (it) {
-  return it instanceof $Symbol;
-};
-
-var $defineProperty = function defineProperty(it, key, D) {
-  if (it === ObjectProto) $defineProperty(OPSymbols, key, D);
-  anObject(it);
-  key = toPrimitive(key, true);
-  anObject(D);
-  if (has(AllSymbols, key)) {
-    if (!D.enumerable) {
-      if (!has(it, HIDDEN)) dP(it, HIDDEN, createDesc(1, {}));
-      it[HIDDEN][key] = true;
-    } else {
-      if (has(it, HIDDEN) && it[HIDDEN][key]) it[HIDDEN][key] = false;
-      D = _create(D, { enumerable: createDesc(0, false) });
-    } return setSymbolDesc(it, key, D);
-  } return dP(it, key, D);
-};
-var $defineProperties = function defineProperties(it, P) {
-  anObject(it);
-  var keys = enumKeys(P = toIObject(P));
-  var i = 0;
-  var l = keys.length;
-  var key;
-  while (l > i) $defineProperty(it, key = keys[i++], P[key]);
-  return it;
-};
-var $create = function create(it, P) {
-  return P === undefined ? _create(it) : $defineProperties(_create(it), P);
-};
-var $propertyIsEnumerable = function propertyIsEnumerable(key) {
-  var E = isEnum.call(this, key = toPrimitive(key, true));
-  if (this === ObjectProto && has(AllSymbols, key) && !has(OPSymbols, key)) return false;
-  return E || !has(this, key) || !has(AllSymbols, key) || has(this, HIDDEN) && this[HIDDEN][key] ? E : true;
-};
-var $getOwnPropertyDescriptor = function getOwnPropertyDescriptor(it, key) {
-  it = toIObject(it);
-  key = toPrimitive(key, true);
-  if (it === ObjectProto && has(AllSymbols, key) && !has(OPSymbols, key)) return;
-  var D = gOPD(it, key);
-  if (D && has(AllSymbols, key) && !(has(it, HIDDEN) && it[HIDDEN][key])) D.enumerable = true;
-  return D;
-};
-var $getOwnPropertyNames = function getOwnPropertyNames(it) {
-  var names = gOPN(toIObject(it));
-  var result = [];
-  var i = 0;
-  var key;
-  while (names.length > i) {
-    if (!has(AllSymbols, key = names[i++]) && key != HIDDEN && key != META) result.push(key);
-  } return result;
-};
-var $getOwnPropertySymbols = function getOwnPropertySymbols(it) {
-  var IS_OP = it === ObjectProto;
-  var names = gOPN(IS_OP ? OPSymbols : toIObject(it));
-  var result = [];
-  var i = 0;
-  var key;
-  while (names.length > i) {
-    if (has(AllSymbols, key = names[i++]) && (IS_OP ? has(ObjectProto, key) : true)) result.push(AllSymbols[key]);
-  } return result;
-};
-
-// 19.4.1.1 Symbol([description])
-if (!USE_NATIVE) {
-  $Symbol = function Symbol() {
-    if (this instanceof $Symbol) throw TypeError('Symbol is not a constructor!');
-    var tag = uid(arguments.length > 0 ? arguments[0] : undefined);
-    var $set = function (value) {
-      if (this === ObjectProto) $set.call(OPSymbols, value);
-      if (has(this, HIDDEN) && has(this[HIDDEN], tag)) this[HIDDEN][tag] = false;
-      setSymbolDesc(this, tag, createDesc(1, value));
-    };
-    if (DESCRIPTORS && setter) setSymbolDesc(ObjectProto, tag, { configurable: true, set: $set });
-    return wrap(tag);
-  };
-  redefine($Symbol[PROTOTYPE], 'toString', function toString() {
-    return this._k;
-  });
-
-  $GOPD.f = $getOwnPropertyDescriptor;
-  $DP.f = $defineProperty;
-  __webpack_require__(51).f = gOPNExt.f = $getOwnPropertyNames;
-  __webpack_require__(19).f = $propertyIsEnumerable;
-  __webpack_require__(28).f = $getOwnPropertySymbols;
-
-  if (DESCRIPTORS && !__webpack_require__(26)) {
-    redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
-  }
-
-  wksExt.f = function (name) {
-    return wrap(wks(name));
-  };
-}
-
-$export($export.G + $export.W + $export.F * !USE_NATIVE, { Symbol: $Symbol });
-
-for (var es6Symbols = (
-  // 19.4.2.2, 19.4.2.3, 19.4.2.4, 19.4.2.6, 19.4.2.8, 19.4.2.9, 19.4.2.10, 19.4.2.11, 19.4.2.12, 19.4.2.13, 19.4.2.14
-  'hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables'
-).split(','), j = 0; es6Symbols.length > j;)wks(es6Symbols[j++]);
-
-for (var wellKnownSymbols = $keys(wks.store), k = 0; wellKnownSymbols.length > k;) wksDefine(wellKnownSymbols[k++]);
-
-$export($export.S + $export.F * !USE_NATIVE, 'Symbol', {
-  // 19.4.2.1 Symbol.for(key)
-  'for': function (key) {
-    return has(SymbolRegistry, key += '')
-      ? SymbolRegistry[key]
-      : SymbolRegistry[key] = $Symbol(key);
-  },
-  // 19.4.2.5 Symbol.keyFor(sym)
-  keyFor: function keyFor(sym) {
-    if (!isSymbol(sym)) throw TypeError(sym + ' is not a symbol!');
-    for (var key in SymbolRegistry) if (SymbolRegistry[key] === sym) return key;
-  },
-  useSetter: function () { setter = true; },
-  useSimple: function () { setter = false; }
-});
-
-$export($export.S + $export.F * !USE_NATIVE, 'Object', {
-  // 19.1.2.2 Object.create(O [, Properties])
-  create: $create,
-  // 19.1.2.4 Object.defineProperty(O, P, Attributes)
-  defineProperty: $defineProperty,
-  // 19.1.2.3 Object.defineProperties(O, Properties)
-  defineProperties: $defineProperties,
-  // 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
-  getOwnPropertyDescriptor: $getOwnPropertyDescriptor,
-  // 19.1.2.7 Object.getOwnPropertyNames(O)
-  getOwnPropertyNames: $getOwnPropertyNames,
-  // 19.1.2.8 Object.getOwnPropertySymbols(O)
-  getOwnPropertySymbols: $getOwnPropertySymbols
-});
-
-// 24.3.2 JSON.stringify(value [, replacer [, space]])
-$JSON && $export($export.S + $export.F * (!USE_NATIVE || $fails(function () {
-  var S = $Symbol();
-  // MS Edge converts symbol values to JSON as {}
-  // WebKit converts symbol values to JSON as null
-  // V8 throws on boxed symbols
-  return _stringify([S]) != '[null]' || _stringify({ a: S }) != '{}' || _stringify(Object(S)) != '{}';
-})), 'JSON', {
-  stringify: function stringify(it) {
-    if (it === undefined || isSymbol(it)) return; // IE8 returns string on undefined
-    var args = [it];
-    var i = 1;
-    var replacer, $replacer;
-    while (arguments.length > i) args.push(arguments[i++]);
-    replacer = args[1];
-    if (typeof replacer == 'function') $replacer = replacer;
-    if ($replacer || !isArray(replacer)) replacer = function (key, value) {
-      if ($replacer) value = $replacer.call(this, key, value);
-      if (!isSymbol(value)) return value;
-    };
-    args[1] = replacer;
-    return _stringify.apply($JSON, args);
-  }
-});
-
-// 19.4.3.4 Symbol.prototype[@@toPrimitive](hint)
-$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(10)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
-// 19.4.3.5 Symbol.prototype[@@toStringTag]
-setToStringTag($Symbol, 'Symbol');
-// 20.2.1.9 Math[@@toStringTag]
-setToStringTag(Math, 'Math', true);
-// 24.3.3 JSON[@@toStringTag]
-setToStringTag(global.JSON, 'JSON', true);
-
-
-/***/ }),
-/* 117 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(35)('asyncIterator');
-
-
-/***/ }),
-/* 118 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(35)('observable');
-
-
-/***/ }),
-/* 119 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(108);
-var global = __webpack_require__(4);
-var hide = __webpack_require__(10);
-var Iterators = __webpack_require__(25);
-var TO_STRING_TAG = __webpack_require__(12)('toStringTag');
-
-var DOMIterables = ('CSSRuleList,CSSStyleDeclaration,CSSValueList,ClientRectList,DOMRectList,DOMStringList,' +
-  'DOMTokenList,DataTransferItemList,FileList,HTMLAllCollection,HTMLCollection,HTMLFormElement,HTMLSelectElement,' +
-  'MediaList,MimeTypeArray,NamedNodeMap,NodeList,PaintRequestList,Plugin,PluginArray,SVGLengthList,SVGNumberList,' +
-  'SVGPathSegList,SVGPointList,SVGStringList,SVGTransformList,SourceBufferList,StyleSheetList,TextTrackCueList,' +
-  'TextTrackList,TouchList').split(',');
-
-for (var i = 0; i < DOMIterables.length; i++) {
-  var NAME = DOMIterables[i];
-  var Collection = global[NAME];
-  var proto = Collection && Collection.prototype;
-  if (proto && !proto[TO_STRING_TAG]) hide(proto, TO_STRING_TAG, NAME);
-  Iterators[NAME] = Iterators.Array;
-}
-
-
-/***/ }),
-/* 120 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_RESULT__;/*!
-  Copyright (c) 2015 Jed Watson.
-  Based on code that is Copyright 2013-2015, Facebook, Inc.
-  All rights reserved.
-*/
-/* global define */
-
-(function () {
-	'use strict';
-
-	var canUseDOM = !!(
-		typeof window !== 'undefined' &&
-		window.document &&
-		window.document.createElement
-	);
-
-	var ExecutionEnvironment = {
-
-		canUseDOM: canUseDOM,
-
-		canUseWorkers: typeof Worker !== 'undefined',
-
-		canUseEventListeners:
-			canUseDOM && !!(window.addEventListener || window.attachEvent),
-
-		canUseViewport: canUseDOM && !!window.screen
-
-	};
-
-	if (true) {
-		!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
-			return ExecutionEnvironment;
-		}.call(exports, __webpack_require__, exports, module),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	} else if (typeof module !== 'undefined' && module.exports) {
-		module.exports = ExecutionEnvironment;
-	} else {
-		window.ExecutionEnvironment = ExecutionEnvironment;
-	}
-
-}());
-
-
-/***/ }),
+/* 72 */,
+/* 73 */,
+/* 74 */,
+/* 75 */,
+/* 76 */,
+/* 77 */,
+/* 78 */,
+/* 79 */,
+/* 80 */,
+/* 81 */,
+/* 82 */,
+/* 83 */,
+/* 84 */,
+/* 85 */,
+/* 86 */,
+/* 87 */,
+/* 88 */,
+/* 89 */,
+/* 90 */,
+/* 91 */,
+/* 92 */,
+/* 93 */,
+/* 94 */,
+/* 95 */,
+/* 96 */,
+/* 97 */,
+/* 98 */,
+/* 99 */,
+/* 100 */,
+/* 101 */,
+/* 102 */,
+/* 103 */,
+/* 104 */,
+/* 105 */,
+/* 106 */,
+/* 107 */,
+/* 108 */,
+/* 109 */,
+/* 110 */,
+/* 111 */,
+/* 112 */,
+/* 113 */,
+/* 114 */,
+/* 115 */,
+/* 116 */,
+/* 117 */,
+/* 118 */,
+/* 119 */,
+/* 120 */,
 /* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -39366,751 +37539,8 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 128 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports,'__esModule',{value:!0});var VALIDATOR_ARG_ERROR_MESSAGE='The typeValidator argument must be a function with the signature function(props, propName, componentName).',MESSAGE_ARG_ERROR_MESSAGE='The error message is optional, but must be a string if provided.',propIsRequired=function propIsRequired(a,b,c,d){if('boolean'==typeof a)return a;return'function'==typeof a?a(b,c,d):!(!0!==!!a)&&!!a},propExists=function propExists(a,b){return Object.hasOwnProperty.call(a,b)},missingPropError=function missingPropError(a,b,c,d){return d?new Error(d):new Error('Required '+a[b]+' `'+b+'`'+(' was not specified in `'+c+'`.'))},guardAgainstInvalidArgTypes=function guardAgainstInvalidArgTypes(a,b){if('function'!=typeof a)throw new TypeError(VALIDATOR_ARG_ERROR_MESSAGE);if(!!b&&'string'!=typeof b)throw new TypeError(MESSAGE_ARG_ERROR_MESSAGE)},isRequiredIf=function isRequiredIf(a,b,c){return guardAgainstInvalidArgTypes(a,c),function(d,e,f){for(var _len=arguments.length,g=Array(3<_len?_len-3:0),_key=3;_key<_len;_key++)g[_key-3]=arguments[_key];return propIsRequired(b,d,e,f)?propExists(d,e)?a.apply(void 0,[d,e,f].concat(g)):missingPropError(d,e,f,c):a.apply(void 0,[d,e,f].concat(g));// Is not required, so just run typeValidator.
-}};exports.default=isRequiredIf;
-
-//# sourceMappingURL=isRequiredIf.js.map
-
-/***/ }),
-/* 129 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TwitterTimelineEmbed", function() { return TwitterTimelineEmbed; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TwitterShareButton", function() { return TwitterShareButton; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TwitterFollowButton", function() { return TwitterFollowButton; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TwitterHashtagButton", function() { return TwitterHashtagButton; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TwitterMentionButton", function() { return TwitterMentionButton; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TwitterTweetEmbed", function() { return TwitterTweetEmbed; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TwitterMomentShare", function() { return TwitterMomentShare; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TwitterDMButton", function() { return TwitterDMButton; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TwitterVideoEmbed", function() { return TwitterVideoEmbed; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TwitterOnAirButton", function() { return TwitterOnAirButton; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign__ = __webpack_require__(73);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_get_prototype_of__ = __webpack_require__(76);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_get_prototype_of___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_get_prototype_of__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__ = __webpack_require__(80);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass__ = __webpack_require__(81);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(83);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits__ = __webpack_require__(82);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_prop_types__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_react_proptype_conditional_require__ = __webpack_require__(128);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_react_proptype_conditional_require___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_react_proptype_conditional_require__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_exenv__ = __webpack_require__(120);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_exenv___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_exenv__);
-
-
-
-
-
-
-
-
-
-
-
-var twitter_widget_js = 'https://platform.twitter.com/widgets.js';
-
-var TwitterTimelineEmbed = function (_Component) {
-     __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits___default()(TwitterTimelineEmbed, _Component);
-
-     function TwitterTimelineEmbed() {
-          __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default()(this, TwitterTimelineEmbed);
-
-          return __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn___default()(this, (TwitterTimelineEmbed.__proto__ || __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_get_prototype_of___default()(TwitterTimelineEmbed)).apply(this, arguments));
-     }
-
-     __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default()(TwitterTimelineEmbed, [{
-          key: 'buildChromeOptions',
-          value: function buildChromeOptions(options) {
-               options.chrome = '';
-               if (this.props.noHeader) {
-                    options.chrome = options.chrome + ' noheader';
-               }
-
-               if (this.props.noFooter) {
-                    options.chrome = options.chrome + ' nofooter';
-               }
-
-               if (this.props.noBorders) {
-                    options.chrome = options.chrome + ' noborders';
-               }
-
-               if (this.props.noScrollbar) {
-                    options.chrome = options.chrome + ' noscrollbar';
-               }
-
-               if (this.props.transparent) {
-                    options.chrome = options.chrome + ' transparent';
-               }
-
-               return options;
-          }
-     }, {
-          key: 'buildOptions',
-          value: function buildOptions() {
-               var options = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default()({}, this.props.options);
-               if (this.props.autoHeight) {
-                    options.height = this.refs.embedContainer.parentNode.offsetHeight;
-               }
-
-               options = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_assign___default()({}, options, {
-                    theme: this.props.theme,
-                    linkColor: this.props.linkColor,
-                    borderColor: this.props.borderColor,
-                    lang: this.props.lang
-               });
-
-               return options;
-          }
-     }, {
-          key: 'renderWidget',
-          value: function renderWidget(options) {
-               if (!this.isMountCanceled) {
-                    window.twttr.widgets.createTimeline({
-                         sourceType: this.props.sourceType,
-                         screenName: this.props.screenName,
-                         userId: this.props.userId,
-                         ownerScreenName: this.props.ownerScreenName,
-                         slug: this.props.slug,
-                         id: this.props.id || this.props.widgetId,
-                         url: this.props.url
-                    }, this.refs.embedContainer, options);
-               }
-          }
-     }, {
-          key: 'componentDidMount',
-          value: function componentDidMount() {
-               var _this2 = this;
-
-               if (__WEBPACK_IMPORTED_MODULE_9_exenv___default.a.canUseDOM) {
-                    var script = __webpack_require__(2);
-                    script(twitter_widget_js, 'twitter-embed', function () {
-                         if (!window.twttr) {
-                              console.error('Failure to load window.twttr in TwitterTimelineEmbed, aborting load.');
-                              return;
-                         }
-
-                         var options = _this2.buildOptions();
-                         /** Append chrome options */
-                         options = _this2.buildChromeOptions(options);
-                         _this2.renderWidget(options);
-                    });
-               }
-          }
-     }, {
-          key: 'componentWillUnmount',
-          value: function componentWillUnmount() {
-               this.isMountCanceled = true;
-          }
-     }, {
-          key: 'render',
-          value: function render() {
-               return __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement('div', { ref: 'embedContainer' });
-          }
-     }]);
-
-     return TwitterTimelineEmbed;
-}(__WEBPACK_IMPORTED_MODULE_6_react__["Component"]);
-
-TwitterTimelineEmbed.propTypes = {
-     /**
-          * This can be either of profile, likes, list, collection, URL, widget
-          */
-     sourceType: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.oneOf(['profile', 'likes', 'list', 'collection', 'URL', 'widget']).isRequired,
-     /**
-          * username of twitter handle as String
-          */
-     screenName: __WEBPACK_IMPORTED_MODULE_8_react_proptype_conditional_require___default()(__WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.string, function (props) {
-          return !props.hasOwnProperty('userId') && (props.sourceType === 'profile' || props.sourceType === 'likes');
-     }),
-     /**
-          * UserId of twitter handle as number
-          */
-     userId: __WEBPACK_IMPORTED_MODULE_8_react_proptype_conditional_require___default()(__WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.number, function (props) {
-          return !props.hasOwnProperty('screenName') && (props.sourceType === 'profile' || props.sourceType === 'likes');
-     }),
-     /**
-          * To show list, used along with slug
-          */
-     ownerScreenName: __WEBPACK_IMPORTED_MODULE_8_react_proptype_conditional_require___default()(__WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.string, function (props) {
-          return props.sourceType === 'list' && !props.hasOwnProperty('id');
-     }),
-     /**
-          * To show list, used along with ownerScreenName
-          */
-     slug: __WEBPACK_IMPORTED_MODULE_8_react_proptype_conditional_require___default()(__WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.string, function (props) {
-          return props.sourceType === 'list' && !props.hasOwnProperty('id');
-     }),
-     /**
-          * To show list, unique list id
-          * Also used with collections, in that case its valid collection id
-          */
-     id: __WEBPACK_IMPORTED_MODULE_8_react_proptype_conditional_require___default()(__WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.number, __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.string]), function (props) {
-          return props.sourceType === 'list' && !props.hasOwnProperty('ownerScreenName') && !props.hasOwnProperty('slug') || props.sourceType === 'collection';
-     }),
-     /**
-          * To show twitter content with url.
-          * Supported content includes profiles, likes, lists, and collections.
-          */
-     url: __WEBPACK_IMPORTED_MODULE_8_react_proptype_conditional_require___default()(__WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.string, function (props) {
-          return props.sourceType === 'url';
-     }),
-     /**
-          * To show custom widget
-          */
-     widgetId: __WEBPACK_IMPORTED_MODULE_8_react_proptype_conditional_require___default()(__WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.string, function (props) {
-          return props.sourceType === 'widget';
-     }),
-     /**
-          * Additional options to pass to twitter widget plugin
-          */
-     options: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.object,
-     /**
-          * Automatically fit into parent container height
-          */
-     autoHeight: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.bool,
-     /**
-          * With dark or light theme
-          */
-     theme: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.oneOf(['dark', 'light']),
-     /**
-          * With custom link colors. Note: Only Hex colors are supported.
-          */
-     linkColor: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.string,
-     /**
-          * With custom border colors. Note: Only Hex colors are supported.
-          */
-     borderColor: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.string,
-     /**
-          * Hide the header from timeline
-          */
-     noHeader: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.bool,
-     /**
-          * Hide the footer from timeline
-          */
-     noFooter: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.bool,
-     /**
-          * Hide the border from timeline
-          */
-     noBorders: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.bool,
-     /**
-          * Hide the scrollbars
-          */
-     noScrollbar: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.bool,
-     /**
-          * Enable Transparancy
-          */
-     transparent: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.bool,
-     /**
-          * Custom language code. Supported codes here: https://developer.twitter.com/en/docs/twitter-for-websites/twitter-for-websites-supported-languages/overview.html
-          */
-     lang: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.string
-};
-
-var TwitterShareButton = function (_Component) {
-  __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits___default()(TwitterShareButton, _Component);
-
-  function TwitterShareButton() {
-    __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default()(this, TwitterShareButton);
-
-    return __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn___default()(this, (TwitterShareButton.__proto__ || __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_get_prototype_of___default()(TwitterShareButton)).apply(this, arguments));
-  }
-
-  __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default()(TwitterShareButton, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      if (__WEBPACK_IMPORTED_MODULE_9_exenv___default.a.canUseDOM) {
-        var script = __webpack_require__(2);
-        script(twitter_widget_js, 'twitter-embed', function () {
-          if (!window.twttr) {
-            console.error('Failure to load window.twttr in TwitterShareButton, aborting load.');
-            return;
-          }
-
-          if (!_this2.isMountCanceled) {
-            window.twttr.widgets.createShareButton(_this2.props.url, _this2.refs.embedContainer, _this2.props.options);
-          }
-        });
-      }
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      this.isMountCanceled = true;
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement('div', { ref: 'embedContainer' });
-    }
-  }]);
-
-  return TwitterShareButton;
-}(__WEBPACK_IMPORTED_MODULE_6_react__["Component"]);
-
-TwitterShareButton.propTypes = {
-  /**
-  * Url for sharing
-  */
-  url: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.string.isRequired,
-  /**
-  * Additional options for overriding config. Details at : https://dev.twitter.com/web/tweet-button/parameters
-  */
-  options: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.object
-};
-
-var TwitterFollowButton = function (_Component) {
-  __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits___default()(TwitterFollowButton, _Component);
-
-  function TwitterFollowButton() {
-    __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default()(this, TwitterFollowButton);
-
-    return __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn___default()(this, (TwitterFollowButton.__proto__ || __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_get_prototype_of___default()(TwitterFollowButton)).apply(this, arguments));
-  }
-
-  __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default()(TwitterFollowButton, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      if (__WEBPACK_IMPORTED_MODULE_9_exenv___default.a.canUseDOM) {
-        var script = __webpack_require__(2);
-        script(twitter_widget_js, 'twitter-embed', function () {
-          if (!window.twttr) {
-            console.error('Failure to load window.twttr in TwitterFollowButton, aborting load.');
-            return;
-          }
-
-          if (!_this2.isMountCanceled) {
-            window.twttr.widgets.createFollowButton(_this2.props.screenName, _this2.refs.embedContainer, _this2.props.options);
-          }
-        });
-      }
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      this.isMountCanceled = true;
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement('div', { ref: 'embedContainer' });
-    }
-  }]);
-
-  return TwitterFollowButton;
-}(__WEBPACK_IMPORTED_MODULE_6_react__["Component"]);
-
-TwitterFollowButton.propTypes = {
-  /**
-       * Username of twitter user which will be followed on click
-       */
-  screenName: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.string.isRequired,
-  /**
-       * Additional options to be added to the button
-       */
-  options: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.object
-};
-
-var TwitterHashtagButton = function (_Component) {
-  __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits___default()(TwitterHashtagButton, _Component);
-
-  function TwitterHashtagButton() {
-    __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default()(this, TwitterHashtagButton);
-
-    return __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn___default()(this, (TwitterHashtagButton.__proto__ || __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_get_prototype_of___default()(TwitterHashtagButton)).apply(this, arguments));
-  }
-
-  __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default()(TwitterHashtagButton, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      if (__WEBPACK_IMPORTED_MODULE_9_exenv___default.a.canUseDOM) {
-        var script = __webpack_require__(2);
-        script(twitter_widget_js, 'twitter-embed', function () {
-          if (!window.twttr) {
-            console.error('Failure to load window.twttr in TwitterHashtagButton, aborting load.');
-            return;
-          }
-
-          if (!_this2.isMountCanceled) {
-            window.twttr.widgets.createHashtagButton(_this2.props.tag, _this2.refs.embedContainer, _this2.props.options);
-          }
-        });
-      }
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      this.isMountCanceled = true;
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement('div', { ref: 'embedContainer' });
-    }
-  }]);
-
-  return TwitterHashtagButton;
-}(__WEBPACK_IMPORTED_MODULE_6_react__["Component"]);
-
-TwitterHashtagButton.propTypes = {
-  /**
-       * Tag name for hashtag button
-       */
-  tag: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.string.isRequired,
-  /**
-       * Additional options to be added to the button
-       */
-  options: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.object
-};
-
-var TwitterMentionButton = function (_Component) {
-  __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits___default()(TwitterMentionButton, _Component);
-
-  function TwitterMentionButton() {
-    __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default()(this, TwitterMentionButton);
-
-    return __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn___default()(this, (TwitterMentionButton.__proto__ || __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_get_prototype_of___default()(TwitterMentionButton)).apply(this, arguments));
-  }
-
-  __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default()(TwitterMentionButton, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      if (__WEBPACK_IMPORTED_MODULE_9_exenv___default.a.canUseDOM) {
-        var script = __webpack_require__(2);
-        script(twitter_widget_js, 'twitter-embed', function () {
-          if (!window.twttr) {
-            console.error('Failure to load window.twttr in TwitterMentionButton, aborting load.');
-            return;
-          }
-
-          if (!_this2.isMountCanceled) {
-            window.twttr.widgets.createMentionButton(_this2.props.screenName, _this2.refs.embedContainer, _this2.props.options);
-          }
-        });
-      }
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      this.isMountCanceled = true;
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement('div', { ref: 'embedContainer' });
-    }
-  }]);
-
-  return TwitterMentionButton;
-}(__WEBPACK_IMPORTED_MODULE_6_react__["Component"]);
-
-TwitterMentionButton.propTypes = {
-  /**
-   * Username to which you will need to tweet
-   */
-  screenName: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.string.isRequired,
-  /**
-   * Additional options for overriding config.
-   */
-  options: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.object
-};
-
-var TwitterTweetEmbed = function (_Component) {
-  __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits___default()(TwitterTweetEmbed, _Component);
-
-  function TwitterTweetEmbed() {
-    __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default()(this, TwitterTweetEmbed);
-
-    return __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn___default()(this, (TwitterTweetEmbed.__proto__ || __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_get_prototype_of___default()(TwitterTweetEmbed)).apply(this, arguments));
-  }
-
-  __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default()(TwitterTweetEmbed, [{
-    key: 'renderWidget',
-    value: function renderWidget() {
-      if (!window.twttr) {
-        console.error('Failure to load window.twttr in TwitterTweetEmbed, aborting load.');
-        return;
-      }
-      if (!this.isMountCanceled) {
-        window.twttr.widgets.createTweet(this.props.tweetId, this.refs.embedContainer, this.props.options);
-      }
-    }
-  }, {
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      if (__WEBPACK_IMPORTED_MODULE_9_exenv___default.a.canUseDOM) {
-        var script = __webpack_require__(2);
-        script(twitter_widget_js, 'twitter-embed', function () {
-          _this2.renderWidget();
-        });
-      }
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      this.isMountCanceled = true;
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement('div', { ref: 'embedContainer' });
-    }
-  }]);
-
-  return TwitterTweetEmbed;
-}(__WEBPACK_IMPORTED_MODULE_6_react__["Component"]);
-
-TwitterTweetEmbed.propTypes = {
-  /**
-       * Tweet id that needs to be shown
-       */
-  tweetId: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.string.isRequired,
-  /**
-       * Additional options to pass to twitter widget plugin
-       */
-  options: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.object
-};
-
-var TwitterMomentShare = function (_Component) {
-  __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits___default()(TwitterMomentShare, _Component);
-
-  function TwitterMomentShare() {
-    __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default()(this, TwitterMomentShare);
-
-    return __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn___default()(this, (TwitterMomentShare.__proto__ || __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_get_prototype_of___default()(TwitterMomentShare)).apply(this, arguments));
-  }
-
-  __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default()(TwitterMomentShare, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      if (__WEBPACK_IMPORTED_MODULE_9_exenv___default.a.canUseDOM) {
-        var script = __webpack_require__(2);
-        script(twitter_widget_js, 'twitter-embed', function () {
-          if (!window.twttr) {
-            console.error('Failure to load window.twttr in TwitterMomentShare, aborting load.');
-            return;
-          }
-
-          if (!_this2.isMountCanceled) {
-            window.twttr.widgets.createMoment(_this2.props.momentId, _this2.refs.shareMoment, _this2.props.options);
-          }
-        });
-      }
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      this.isMountCanceled = true;
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement('div', { ref: 'shareMoment' });
-    }
-  }]);
-
-  return TwitterMomentShare;
-}(__WEBPACK_IMPORTED_MODULE_6_react__["Component"]);
-
-TwitterMomentShare.propTypes = {
-  /**
-   * id of Twitter moment to show
-   */
-  momentId: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.string.isRequired,
-  /**
-   * Additional options for overriding config.
-   */
-  options: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.object
-};
-
-var TwitterDMButton = function (_Component) {
-  __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits___default()(TwitterDMButton, _Component);
-
-  function TwitterDMButton() {
-    __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default()(this, TwitterDMButton);
-
-    return __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn___default()(this, (TwitterDMButton.__proto__ || __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_get_prototype_of___default()(TwitterDMButton)).apply(this, arguments));
-  }
-
-  __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default()(TwitterDMButton, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      if (__WEBPACK_IMPORTED_MODULE_9_exenv___default.a.canUseDOM) {
-        var script = __webpack_require__(2);
-        script(twitter_widget_js, 'twitter-embed', function () {
-          if (!window.twttr) {
-            console.error('Failure to load window.twttr in TwitterDMButton, aborting load.');
-            return;
-          }
-
-          if (!_this2.isMountCanceled) {
-            window.twttr.widgets.createDMButton(_this2.props.id, _this2.refs.embedContainer, _this2.props.options);
-          }
-        });
-      }
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      this.isMountCanceled = true;
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement('div', { ref: 'embedContainer' });
-    }
-  }]);
-
-  return TwitterDMButton;
-}(__WEBPACK_IMPORTED_MODULE_6_react__["Component"]);
-
-TwitterDMButton.propTypes = {
-  /**
-       * Twitter user id for DM button
-       */
-  id: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.number.isRequired,
-  /**
-       * Additional options to be added to the button
-       */
-  options: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.object
-};
-
-var TwitterVideoEmbed = function (_Component) {
-  __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits___default()(TwitterVideoEmbed, _Component);
-
-  function TwitterVideoEmbed() {
-    __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default()(this, TwitterVideoEmbed);
-
-    return __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn___default()(this, (TwitterVideoEmbed.__proto__ || __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_get_prototype_of___default()(TwitterVideoEmbed)).apply(this, arguments));
-  }
-
-  __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default()(TwitterVideoEmbed, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      if (__WEBPACK_IMPORTED_MODULE_9_exenv___default.a.canUseDOM) {
-        var script = __webpack_require__(2);
-        script(twitter_widget_js, 'twitter-embed', function () {
-          if (!window.twttr) {
-            console.error('Failure to load window.twttr in TwitterVideoEmbed, aborting load.');
-            return;
-          }
-          if (!_this2.isMountCanceled) {
-            window.twttr.widgets.createVideo(_this2.props.id, _this2.refs.embedContainer);
-          }
-        });
-      }
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      this.isMountCanceled = true;
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement('div', { ref: 'embedContainer' });
-    }
-  }]);
-
-  return TwitterVideoEmbed;
-}(__WEBPACK_IMPORTED_MODULE_6_react__["Component"]);
-
-TwitterVideoEmbed.propTypes = {
-  /**
-       * Id of video tweet.
-       */
-  id: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.string.isRequired
-};
-
-var TwitterOnAirButton = function (_Component) {
-  __WEBPACK_IMPORTED_MODULE_5_babel_runtime_helpers_inherits___default()(TwitterOnAirButton, _Component);
-
-  function TwitterOnAirButton() {
-    __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_classCallCheck___default()(this, TwitterOnAirButton);
-
-    return __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_possibleConstructorReturn___default()(this, (TwitterOnAirButton.__proto__ || __WEBPACK_IMPORTED_MODULE_1_babel_runtime_core_js_object_get_prototype_of___default()(TwitterOnAirButton)).apply(this, arguments));
-  }
-
-  __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_createClass___default()(TwitterOnAirButton, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      if (__WEBPACK_IMPORTED_MODULE_9_exenv___default.a.canUseDOM) {
-        var script = __webpack_require__(2);
-        script(twitter_widget_js, 'twitter-embed', function () {
-          if (!window.twttr) {
-            console.error('Failure to load window.twttr in TwitterOnAirButton, aborting load.');
-            return;
-          }
-
-          if (!_this2.isMountCanceled) {
-            window.twttr.widgets.createPeriscopeOnAirButton(_this2.props.username, _this2.refs.embedContainer, _this2.props.options);
-          }
-        });
-      }
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      this.isMountCanceled = true;
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return __WEBPACK_IMPORTED_MODULE_6_react___default.a.createElement('div', { ref: 'embedContainer' });
-    }
-  }]);
-
-  return TwitterOnAirButton;
-}(__WEBPACK_IMPORTED_MODULE_6_react__["Component"]);
-
-TwitterOnAirButton.propTypes = {
-  /**
-   * Username for which you require periscope on air button
-   */
-  username: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.string.isRequired,
-  /**
-   * Additional options for overriding config.
-   */
-  options: __WEBPACK_IMPORTED_MODULE_7_prop_types___default.a.object
-};
-
-
-//# sourceMappingURL=index.es.js.map
-
-
-/***/ }),
+/* 128 */,
+/* 129 */,
 /* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -43641,6 +41071,98 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (this && this.clearImmediate);
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(13)))
+
+/***/ }),
+/* 141 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Logo = function Logo(_ref) {
+  var open = _ref.open,
+      modalToggle = _ref.modalToggle;
+
+  if (open) {
+    return _react2.default.createElement(
+      'div',
+      {
+        className: 'modal-wrapper-call-ftc',
+        style: {
+          'display': open ? 'block' : 'none'
+        } },
+      _react2.default.createElement(
+        'div',
+        { className: 'modal-call-ftc' },
+        _react2.default.createElement(
+          'a',
+          {
+            href: '#',
+            style: {
+              'fontSize': '250%'
+            },
+            onClick: modalToggle },
+          '\xD7'
+        ),
+        _react2.default.createElement(
+          'header',
+          null,
+          _react2.default.createElement(
+            'h2',
+            null,
+            'Please call the FTC and tell commissioners to break up Facebook!'
+          )
+        ),
+        _react2.default.createElement(
+          'h3',
+          { style: {
+              'textAlign': 'center'
+            } },
+          'Call Now:'
+        ),
+        _react2.default.createElement(
+          'h3',
+          { style: {
+              'textAlign': 'center'
+            } },
+          '919-926-9388'
+        ),
+        _react2.default.createElement(
+          'p',
+          { style: {
+              'textAlign': 'center'
+            } },
+          'We\u2019ll connect you to FTC commissioners. You can use this script \u2014 just introduce yourself, be polite, and say:'
+        ),
+        _react2.default.createElement(
+          'p',
+          { style: {
+              'textAlign': 'center'
+            } },
+          _react2.default.createElement(
+            'em',
+            null,
+            '"I\'m calling to ask that the FTC pursue a breakup of Facebook, forcing them to sell off WhatsApp, Instagram, and Messenger. Even a big fine won\u2019t be enough to change their ways. It\u2019s time to restore democracy and competition to social media through strong antitrust action. Thank you."'
+          )
+        )
+      )
+    );
+  } else {
+    return _react2.default.createElement('span', null);
+  }
+};
+
+exports.default = Logo;
 
 /***/ })
 /******/ ]);

@@ -39,11 +39,14 @@ class Form extends Component {
     }
     
     formSubmitted(evt) {
+      let self = this;
       evt.preventDefault();
+      
       setTimeout(function() { 
         this.setState({
           submitted: true
-        }, function(){
+        }, function() {
+          self.props.modalToggle();
           window.scrollTo( 0, 0);
         });
         }.bind(this), 5000);
@@ -54,7 +57,7 @@ class Form extends Component {
         let form = null;
         
         form = (
-          < ActionForm formSubmitted={ this.formSubmitted }/>
+          < ActionForm formSubmitted={ this.formSubmitted } modalToggle={this.props.modalToggle}/>
         );  
       //   if (!this.state.submitted) {
       //   return (

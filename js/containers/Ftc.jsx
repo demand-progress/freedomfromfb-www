@@ -6,6 +6,10 @@ import Form from './Form.jsx';
 import ActionForm from './ActionForm.jsx';
 
 class Ftc extends  Component { 
+    constructor(props) {
+        super(props);
+    }
+    
     render(){ 
         return (
             <section id="ftc">
@@ -16,7 +20,7 @@ class Ftc extends  Component {
                 </section>
                 <section id="petition">
                     <h1>Email the FTC: <span className="mobile-only">It's time to break up Facebook</span></h1>
-                    <Form />
+                    <Form modalToggle={this.props.modalToggle}/>
                     
                     
                     <div className="clearfix"></div>
