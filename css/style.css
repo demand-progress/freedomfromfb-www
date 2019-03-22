@@ -53,7 +53,7 @@ header {
 	position: relative;
 	-webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 95%, 52% 95%, 50% 100%, 48% 95%, 0 95%);
 	clip-path: polygon(0% 0%, 100% 0%, 100% 95%, 52% 95%, 50% 100%, 48% 95%, 0 95%);
-	z-index: 9999;
+	z-index: 9801;
 }
 
 /* SOCIAL */
@@ -298,7 +298,7 @@ ul#coalition li img {
 	text-align: right;
 	-webkit-clip-path:	polygon(0% 0%, 100% 0%, 100% 90%, 4% 90%, 0 98%, 0 75%, 0% 75%);
 	clip-path:			polygon(0% 0%, 100% 0%, 100% 90%, 4% 90%, 0 98%, 0 75%, 0% 75%);
-	z-index: 500;
+	z-index: 9800;
 }
 
 h1 {
@@ -362,6 +362,8 @@ small {
 	color: #ffffff;
 	-webkit-clip-path:	polygon(0% 0%, 100% 0%, 100% 95%, 52% 95%, 50% 100%, 48% 95%, 0 95%);
 	clip-path:			polygon(0% 0%, 100% 0%, 100% 95%, 52% 95%, 50% 100%, 48% 95%, 0 95%);
+	position: relative;
+	z-index: -1;
 }
 
 #zuckerberg {
@@ -450,6 +452,8 @@ footer {
 	color: #ffffff;
 	-webkit-clip-path:	polygon(50% 10%, 52% 0, 100% 0, 100% 100%, 0 100%, 0 0, 48% 0);
 	clip-path:			polygon(50% 10%, 52% 0, 100% 0, 100% 100%, 0 100%, 0 0, 48% 0);
+	position: relative;
+	z-index: -1;
 }
 
 #disclaimer {
@@ -817,3 +821,24 @@ ul#follow li a .fa-instagram {
 .clearfix {
 	clear: both;
 }
+
+.modal-wrapper-call-ftc {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	overflow: scroll;
+	background-color: #fff;
+	margin: auto;
+	width: fit-content;
+	z-index: 9999
+	}
+	
+	.modal-call-ftc {
+	width: 700px;
+	margin: auto;
+	position: relative;
+	padding: 20px 0px;
+	z-index: 9999
+	}

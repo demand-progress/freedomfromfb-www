@@ -4040,27 +4040,21 @@ var ActionForm = function (_Component) {
     _this.sendFormToActionKit = _this.sendFormToActionKit.bind(_this);
     _this.lookUpStateByZipCode = _this.lookUpStateByZipCode.bind(_this);
     _this.lookUpTwitterHandles = _this.lookUpTwitterHandles.bind(_this);
-    _this.redirectTwitterStorm = _this.redirectTwitterStorm.bind(_this);
+    _this.closeModal = _this.closeModal.bind(_this);
+    // this.redirectTwitterStorm = this.redirectTwitterStorm.bind(this);
     return _this;
   }
 
+  // redirectTwitterStorm() {   var url =
+  // 'https://tweetswarm.herokuapp.com/freedom-facebook?tag[]=JoeSimonsFTC&tag[]=FT
+  // CPhillips&tag[]=chopraftc&tag[]=RKSlaughterFTC';   var twitterHandleQuery =
+  // '';   // const copyTwitterHandles = this.state.twitterHandles.slice();   //
+  // for (var i = 0; i < copyTwitterHandles.length; i++) {   //   if (i == 0) {
+  // //     twitterHandleQuery += 'tag[]=' + copyTwitterHandles[i];   //   } else
+  // {   //     twitterHandleQuery += '&tag[]=' + copyTwitterHandles[i];   //   }
+  //  // }   url += twitterHandleQuery;   window.location.replace(url); }
+
   _createClass(ActionForm, [{
-    key: 'redirectTwitterStorm',
-    value: function redirectTwitterStorm() {
-      var url = 'https://tweetswarm.herokuapp.com/freedom-facebook?tag[]=JoeSimonsFTC&tag[]=FTCPhillips&tag[]=chopraftc&tag[]=RKSlaughterFTC';
-      var twitterHandleQuery = '';
-      // const copyTwitterHandles = this.state.twitterHandles.slice(); 
-      // for (var i = 0; i < copyTwitterHandles.length; i++) {
-      //   if (i == 0) {
-      //     twitterHandleQuery += 'tag[]=' + copyTwitterHandles[i];
-      //   } else {
-      //     twitterHandleQuery += '&tag[]=' + copyTwitterHandles[i];
-      //   }
-      // }
-      url += twitterHandleQuery;
-      window.location.replace(url);
-    }
-  }, {
     key: 'lookUpTwitterHandles',
     value: function lookUpTwitterHandles() {
       var copyMembersID = this.state.congressMembersID.slice();
@@ -4070,7 +4064,9 @@ var ActionForm = function (_Component) {
           var legislator_bioID = object.id.bioguide;
           var twitterHandle = object.social.twitter;
           if (legislator_bioID == copyMembersID[i]) {
-            this.setState({ twitterHandles: [].concat(_toConsumableArray(this.state.twitterHandles), [twitterHandle]) });
+            this.setState({
+              twitterHandles: [].concat(_toConsumableArray(this.state.twitterHandles), [twitterHandle])
+            });
           }
         }
       }
@@ -4080,23 +4076,23 @@ var ActionForm = function (_Component) {
     value: function lookUpStateByZipCode(zipcode) {
       var url = "https://api.zippopotam.us/us/" + zipcode; //90210
       // var url = 'https://whoismyrepresentative.com/getall_mems.php?zip=' + zipcode + '&output=json';
-      $.ajax({
-        "url": url,
-        "dataType": "json"
-      }).done(function (data) {
+      $.ajax({ "url": url, "dataType": "json" }).done(function (data) {
         // this.setState({usstate: data.state});
-        this.setState({ usstate: data.places[0]['state abbreviation'] });
+        this.setState({ usstate: data.places[0]['state abbreviation']
+        });
         for (var i = 0; i < _legislatorsCurrent2.default.length; i++) {
           var object = _legislatorsCurrent2.default[i];
           var legislator_bioID = object.id.bioguide;
           var objectTermsLst = object.terms;
           var currentTerm = objectTermsLst[objectTermsLst.length - 1];
           if (currentTerm.state == this.state.usstate) {
-            this.setState({ congressMembersID: [].concat(_toConsumableArray(this.state.congressMembersID), [legislator_bioID]) });
+            this.setState({
+              congressMembersID: [].concat(_toConsumableArray(this.state.congressMembersID), [legislator_bioID])
+            });
           }
         }
         this.lookUpTwitterHandles();
-        this.redirectTwitterStorm();
+        // this.redirectTwitterStorm();
       }.bind(this)).fail(function (data) {
         console.log("Request failed");
       });
@@ -4112,8 +4108,8 @@ var ActionForm = function (_Component) {
       evt.preventDefault();
       var fullname = document.getElementById('fullname');
       var email = document.getElementById('emailform');
-      var zip = document.getElementById('zip'); // dont think i need this part 
-      this.lookUpStateByZipCode(this.state.zipcode); // correct syntax 
+      var zip = document.getElementById('zip'); // dont think i need this part
+      this.lookUpStateByZipCode(this.state.zipcode); // correct syntax
       // this.lookUpCongressByZipcode(this.state.zipcode);
 
       var emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
@@ -4192,21 +4188,21 @@ var ActionForm = function (_Component) {
     value: function click(e) {
       var self = this;
       this.onSubmit(e);
-      this.setState({
-        sent: true
-      });
+      this.setState({ sent: true });
       this.props.formSubmitted(e);
-      setTimeout(function () {
-        self.setState({
-          sent: false
-        });
-      }, 1000);
+      // setTimeout(function() {   self.setState({     sent: false   }) }, 1000);
+    }
+  }, {
+    key: 'closeModal',
+    value: function closeModal(event) {
+      event.preventDefault();
+      this.setState({ sent: false });
     }
   }, {
     key: 'render',
     value: function render() {
       var button = null;
-
+      var modal = null;
       if (this.state.sent) {
         button = _react2.default.createElement(
           'button',
@@ -4221,15 +4217,102 @@ var ActionForm = function (_Component) {
         );
       }
 
+      if (this.state.sent) {
+        modal = _react2.default.createElement(
+          'div',
+          {
+            className: 'modal-wrapper-call-ftc',
+            style: {
+              'display': this.state.sent ? 'block' : 'none'
+            } },
+          _react2.default.createElement(
+            'div',
+            { className: 'modal-call-ftc' },
+            _react2.default.createElement(
+              'a',
+              {
+                href: '#',
+                style: {
+                  'fontSize': '250%'
+                },
+                onClick: this.closeModal },
+              '\xD7'
+            ),
+            _react2.default.createElement(
+              'header',
+              null,
+              _react2.default.createElement(
+                'h2',
+                null,
+                'Please call the FTC and tell commissioners to break up Facebook!'
+              )
+            ),
+            _react2.default.createElement(
+              'h3',
+              { style: {
+                  'textAlign': 'center'
+                } },
+              'Call Now:'
+            ),
+            _react2.default.createElement(
+              'h3',
+              { style: {
+                  'textAlign': 'center'
+                } },
+              '919-926-9388'
+            ),
+            _react2.default.createElement(
+              'p',
+              { style: {
+                  'textAlign': 'center'
+                } },
+              'We\u2019ll connect you to FTC commissioners. You can use this script \u2014 just introduce yourself, be polite, and say:'
+            ),
+            _react2.default.createElement(
+              'p',
+              { style: {
+                  'textAlign': 'center'
+                } },
+              _react2.default.createElement(
+                'em',
+                null,
+                '"I\'m calling to ask that the FTC pursue a breakup of Facebook, forcing them to sell off WhatsApp, Instagram, and Messenger. Even a big fine won\u2019t be enough to change their ways. It\u2019s time to restore democracy and competition to social media through strong antitrust action. Thank you."'
+              )
+            )
+          )
+        );
+      }
+
       return _react2.default.createElement(
-        'form',
-        { id: 'subForm', name: 'petition', className: 'js-cm-form' },
-        _react2.default.createElement('input', { type: 'text', id: 'fullname', name: 'fullname', placeholder: 'full name', pattern: '[A-Za-z \'.-]+' }),
-        _react2.default.createElement('input', { type: 'email', id: 'emailform', name: 'email', required: '', placeholder: 'email address' }),
-        _react2.default.createElement('input', { type: 'text', id: 'zip', name: 'zip', required: '', placeholder: 'zip code', value: this.state.zipcode,
-          onChange: this.handleChange }),
-        _react2.default.createElement('div', { className: 'text-error' }),
-        button
+        _react2.default.Fragment,
+        null,
+        modal,
+        !this.state.sent && _react2.default.createElement(
+          'form',
+          { id: 'subForm', name: 'petition', className: 'js-cm-form' },
+          _react2.default.createElement('input', {
+            type: 'text',
+            id: 'fullname',
+            name: 'fullname',
+            placeholder: 'full name',
+            pattern: '[A-Za-z \'.-]+' }),
+          _react2.default.createElement('input', {
+            type: 'email',
+            id: 'emailform',
+            name: 'email',
+            required: '',
+            placeholder: 'email address' }),
+          _react2.default.createElement('input', {
+            type: 'text',
+            id: 'zip',
+            name: 'zip',
+            required: '',
+            placeholder: 'zip code',
+            value: this.state.zipcode,
+            onChange: this.handleChange }),
+          _react2.default.createElement('div', { className: 'text-error' }),
+          button
+        )
       );
     }
   }]);
@@ -15765,23 +15848,18 @@ var Form = function (_Component) {
       var form = null;
 
       form = _react2.default.createElement(_ActionForm2.default, { formSubmitted: this.formSubmitted });
-      if (!this.state.submitted) {
-        return _react2.default.createElement(
-          'div',
-          null,
-          form
-        );
-      } else {
-        return _react2.default.createElement(
-          'div',
-          null,
-          _react2.default.createElement(
-            'h2',
-            null,
-            'Thank you for signing!'
-          )
-        );
-      }
+      //   if (!this.state.submitted) {
+      //   return (
+      //     <div>    
+      //     {form}
+      //   </div>
+      // );
+      //   } else {
+      //     return (
+      //       <div><h2>Thank you for signing!</h2></div>
+      //     )
+      //   }
+      return form;
     }
   }]);
 
