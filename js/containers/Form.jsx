@@ -49,7 +49,7 @@ class Form extends Component {
           self.props.modalToggle();
           window.scrollTo( 0, 0);
         });
-        }.bind(this), 5000);
+        }.bind(this), 2500);
     }
     
     
@@ -59,18 +59,17 @@ class Form extends Component {
         form = (
           < ActionForm formSubmitted={ this.formSubmitted } modalToggle={this.props.modalToggle}/>
         );  
-      //   if (!this.state.submitted) {
-      //   return (
-      //     <div>    
-      //     {form}
-      //   </div>
-      // );
-      //   } else {
-      //     return (
-      //       <div><h2>Thank you for signing!</h2></div>
-      //     )
-      //   }
-      return form
+        if (!this.state.submitted) {
+        return (
+          <div>    
+          {form}
+        </div>
+      );
+        } else {
+          return (
+            <div><h2>Thank you for signing!</h2></div>
+          )
+        }
     }
 }
 

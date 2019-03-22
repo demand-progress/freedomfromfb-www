@@ -56,6 +56,50 @@ header {
 	z-index: 9801;
 }
 
+.modal-wrapper-call-ftc {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	overflow: scroll;
+	background-color: #fff;
+	margin: auto;
+	width: fit-content;
+	max-height: 700px;
+	border-radius: 11px 11px;
+	z-index: 9999
+	}
+	
+	.modal-call-ftc {
+	width: 715px;
+	margin: auto;
+	position: relative;
+	z-index: 9999
+	}
+
+.modal-header {
+  padding: 0;
+  margin: 0;
+  padding: 40px 5% 0 5%;
+  width: 100%;
+  height: 245px;
+	background-color: #fff200;
+}
+
+.modal-caption {
+	margin: 0;
+  text-align: center;
+  font-size: 36px;
+  position: relative;
+  top: 50px
+}
+
+.phone-header {
+  text-align: center;
+  font-size: 41px;
+}
+
 /* SOCIAL */
 
 menu#social {
@@ -769,6 +813,32 @@ ul#follow li a .fa-instagram {
 		-webkit-overflow-scrolling: touch;
 		margin: auto 0px;
 	}
+
+	.modal-wrapper-call-ftc {
+		width: 90%;
+		font-size: auto
+	}
+
+	.modal-call-ftc {
+		width: 100%;
+		height: 100%;
+	}
+
+	.modal-header {
+		height: fit-content;
+		bottom: 15px;
+	}
+
+	.modal-caption {
+		font-size: 85%;
+		font-weight: bold;
+		margin-bottom: 1.1em;
+		padding: 0.8em;
+	}
+
+	.phone-header {
+		font-size: 100%;
+	}
 }
 
 @media (min-width:768px) and (max-width:1024px) {
@@ -816,29 +886,10 @@ ul#follow li a .fa-instagram {
 	}
 }
 
+
+
 /* RESET */
 
 .clearfix {
 	clear: both;
 }
-
-.modal-wrapper-call-ftc {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	overflow: scroll;
-	background-color: #fff;
-	margin: auto;
-	width: fit-content;
-	z-index: 9999
-	}
-	
-	.modal-call-ftc {
-	width: 700px;
-	margin: auto;
-	position: relative;
-	padding: 20px 0px;
-	z-index: 9999
-	}
