@@ -10,19 +10,32 @@ import Footer from './Footer.jsx';
 import Header from './Header.jsx';
 import About from './About.jsx';
 import Ftc from './Ftc.jsx';
-import Tweet from './Tweet.jsx';
+import Modal from './Modal.jsx'
 
 class App extends Component {
   // <Main />
+  constructor() {
+    super();
+    this.state= {
+      modalOpen: false
+    }
+    this.toggleModal = this.toggleModal.bind(this);
+  }
+
   componentDidMount () {
     window.scrollTo(0, 0);
+  }
+
+  toggleModal() {
+    this.setState({modalOpen: !this.state.modalOpen });
   }
 
   render() {
       return (
         <div>
+          <Modal open={this.state.modalOpen} modalToggle={this.toggleModal} />
           <Header />
-          <Ftc />
+          <Ftc modalToggle={this.toggleModal} />
           <About />
           <Footer />
         </div>
