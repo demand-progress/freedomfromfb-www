@@ -11,26 +11,15 @@ const Logo = ({open, modalToggle}) => {
           : 'none'
       }}>
         <div className='modal-call-ftc'>
-          <div
-            className='modal-header'>
-            <a
-              href='#'
-              style={{
-              fontSize: '250%',
-              float: 'right',
-              width: '100%',
-              textAlign: 'end'
-            }}
-              onClick={modalToggle}>
+          <div className='modal-header'>
+            <a href='#' className='close-modal' onClick={modalToggle}>
               ×
             </a>
-            <h2
-              className='modal-caption'>
+            <h2 className='modal-caption'>
               Please call the FTC and tell commissioners to break up Facebook!
             </h2>
           </div>
-          <h3
-           className='phone-header'>
+          <h3 className='phone-header'>
             Call Now:
           </h3>
           <h3 style={{
