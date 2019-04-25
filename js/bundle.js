@@ -275,7 +275,6 @@ if (process.env.NODE_ENV === 'production') {
 /* 2 */
 /***/ (function(module, exports) {
 
-<<<<<<< HEAD
 var g;
 
 // This works in non-strict mode
@@ -297,29 +296,6 @@ try {
 // easier to handle this case. if(!global) { ...}
 
 module.exports = g;
-=======
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
->>>>>>> 2906f1ea4b97f78ec6578bfb3b4c5bd4a8abeeed
 
 
 /***/ }),
@@ -786,7 +762,6 @@ function normalizeIconArgs(icon$$1) {
   if (_typeof(icon$$1) === 'object' && icon$$1.prefix && icon$$1.iconName) {
     return icon$$1;
   }
-<<<<<<< HEAD
 
   if (Array.isArray(icon$$1) && icon$$1.length === 2) {
     return {
@@ -872,93 +847,6 @@ FontAwesomeIcon.defaultProps = {
 var convertCurry = convert.bind(null, __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement);
 
 
-=======
-
-  if (Array.isArray(icon$$1) && icon$$1.length === 2) {
-    return {
-      prefix: icon$$1[0],
-      iconName: icon$$1[1]
-    };
-  }
-
-  if (typeof icon$$1 === 'string') {
-    return {
-      prefix: 'fas',
-      iconName: icon$$1
-    };
-  }
-}
-
-function FontAwesomeIcon(props) {
-  var iconArgs = props.icon,
-      maskArgs = props.mask,
-      symbol = props.symbol,
-      className = props.className,
-      title = props.title;
-  var iconLookup = normalizeIconArgs(iconArgs);
-  var classes = objectWithKey('classes', [].concat(_toConsumableArray(classList(props)), _toConsumableArray(className.split(' '))));
-  var transform = objectWithKey('transform', typeof props.transform === 'string' ? __WEBPACK_IMPORTED_MODULE_0__fortawesome_fontawesome_svg_core__["parse"].transform(props.transform) : props.transform);
-  var mask = objectWithKey('mask', normalizeIconArgs(maskArgs));
-  var renderedIcon = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__fortawesome_fontawesome_svg_core__["icon"])(iconLookup, _objectSpread({}, classes, transform, mask, {
-    symbol: symbol,
-    title: title
-  }));
-
-  if (!renderedIcon) {
-    log('Could not find icon', iconLookup);
-    return null;
-  }
-
-  var abstract = renderedIcon.abstract;
-  var extraProps = {};
-  Object.keys(props).forEach(function (key) {
-    if (!FontAwesomeIcon.defaultProps.hasOwnProperty(key)) {
-      extraProps[key] = props[key];
-    }
-  });
-  return convertCurry(abstract[0], extraProps);
-}
-FontAwesomeIcon.displayName = 'FontAwesomeIcon';
-FontAwesomeIcon.propTypes = {
-  border: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.bool,
-  className: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
-  mask: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.object, __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.array, __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string]),
-  fixedWidth: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.bool,
-  inverse: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.bool,
-  flip: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.oneOf(['horizontal', 'vertical', 'both']),
-  icon: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.object, __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.array, __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string]),
-  listItem: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.bool,
-  pull: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.oneOf(['right', 'left']),
-  pulse: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.bool,
-  rotation: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.oneOf([90, 180, 270]),
-  size: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.oneOf(['lg', 'xs', 'sm', '1x', '2x', '3x', '4x', '5x', '6x', '7x', '8x', '9x', '10x']),
-  spin: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.bool,
-  symbol: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.bool, __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string]),
-  title: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
-  transform: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string, __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.object])
-};
-FontAwesomeIcon.defaultProps = {
-  border: false,
-  className: '',
-  mask: null,
-  fixedWidth: false,
-  inverse: false,
-  flip: null,
-  icon: null,
-  listItem: false,
-  pull: null,
-  pulse: false,
-  rotation: null,
-  size: null,
-  spin: false,
-  symbol: false,
-  title: '',
-  transform: null
-};
-var convertCurry = convert.bind(null, __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement);
-
-
->>>>>>> 2906f1ea4b97f78ec6578bfb3b4c5bd4a8abeeed
 
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2), __webpack_require__(0)))
 
@@ -14660,11 +14548,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 var CONF = {
     actionKitPageShortName: 'freedom-from-fb',
-<<<<<<< HEAD
     actionKitPageId: 2693,
-=======
-    actionKitPageId: 2639,
->>>>>>> 2906f1ea4b97f78ec6578bfb3b4c5bd4a8abeeed
     prettyCampaignName: 'Freedom From Facebook',
     callCampaign: 'freedom-from-fb',
     callPowerId: 38
@@ -14910,36 +14794,7 @@ var Footer = function (_Component) {
                     _react2.default.createElement(
                         'li',
                         null,
-<<<<<<< HEAD
                         _react2.default.createElement('img', { src: 'images/demand-progress-logo.png' })
-=======
-                        _react2.default.createElement('img', { src: 'images/jewish-voice-for-peace.png' })
-                    ),
-                    _react2.default.createElement(
-                        'li',
-                        null,
-                        _react2.default.createElement('img', { src: 'images/demand-progress-logo.png' })
-                    ),
-                    _react2.default.createElement(
-                        'li',
-                        null,
-                        _react2.default.createElement('img', { style: { "filter": "none" }, src: 'images/PasAFV.jpg' })
-                    ),
-                    _react2.default.createElement(
-                        'li',
-                        null,
-                        _react2.default.createElement('img', { src: 'images/progress-america.png' })
-                    ),
-                    _react2.default.createElement(
-                        'li',
-                        null,
-                        _react2.default.createElement('img', { style: { "filter": "none" }, src: 'images/CHV Logo2.jpg' })
-                    ),
-                    _react2.default.createElement(
-                        'li',
-                        null,
-                        _react2.default.createElement('img', { style: { "filter": "none" }, src: 'images/logo-credo-action.jpg' })
->>>>>>> 2906f1ea4b97f78ec6578bfb3b4c5bd4a8abeeed
                     )
                 ),
                 _react2.default.createElement(
@@ -15403,47 +15258,21 @@ var Logo = function Logo(_ref) {
         { className: 'modal-call-ftc' },
         _react2.default.createElement(
           'div',
-<<<<<<< HEAD
           { className: 'modal-header' },
           _react2.default.createElement(
             'a',
             { href: '#', className: 'close-modal', onClick: modalToggle },
-=======
-          {
-            className: 'modal-header' },
-          _react2.default.createElement(
-            'a',
-            {
-              href: '#',
-              style: {
-                fontSize: '250%',
-                float: 'right',
-                width: '100%',
-                textAlign: 'end'
-              },
-              onClick: modalToggle },
->>>>>>> 2906f1ea4b97f78ec6578bfb3b4c5bd4a8abeeed
             '\xD7'
           ),
           _react2.default.createElement(
             'h2',
-<<<<<<< HEAD
             { className: 'modal-caption' },
-=======
-            {
-              className: 'modal-caption' },
->>>>>>> 2906f1ea4b97f78ec6578bfb3b4c5bd4a8abeeed
             'Please call the FTC and tell commissioners to break up Facebook!'
           )
         ),
         _react2.default.createElement(
           'h3',
-<<<<<<< HEAD
           { className: 'phone-header' },
-=======
-          {
-            className: 'phone-header' },
->>>>>>> 2906f1ea4b97f78ec6578bfb3b4c5bd4a8abeeed
           'Call Now:'
         ),
         _react2.default.createElement(
