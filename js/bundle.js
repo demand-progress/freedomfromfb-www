@@ -14548,7 +14548,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 var CONF = {
     actionKitPageShortName: 'freedom-from-fb',
-    actionKitPageId: 2639,
+    actionKitPageId: 2693,
     prettyCampaignName: 'Freedom From Facebook',
     callCampaign: 'freedom-from-fb',
     callPowerId: 38
