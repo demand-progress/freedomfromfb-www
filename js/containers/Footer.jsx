@@ -46,12 +46,12 @@ class Footer extends  Component {
         return (
             <footer>
             	<ul id="coalition">
-            		<li><img src="images/jewish-voice-for-peace.png"/></li>
+            		{/* <li><img src="images/jewish-voice-for-peace.png"/></li> */}
             		<li><img src="images/demand-progress-logo.png"/></li>
-                    <li><img style={{"filter": "none"}} src="images/PasAFV.jpg"/></li>
+                    {/* <li><img style={{"filter": "none"}} src="images/PasAFV.jpg"/></li>
                     <li><img src="images/progress-america.png"/></li>
                     <li><img style={{"filter": "none"}} src="images/CHV Logo2.jpg"/></li>
-                    <li><img style={{"filter": "none"}} src="images/logo-credo-action.jpg"/></li>
+                    <li><img style={{"filter": "none"}} src="images/logo-credo-action.jpg"/></li> */}
             	</ul>
 	
             	<menu id="share">
